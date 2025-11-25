@@ -43,4 +43,4 @@ EOF
 
 FROM scratch
 
-COPY --from=builder /output/ /
+COPY --from=builder /output/ /wallpapers
