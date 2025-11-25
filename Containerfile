@@ -33,11 +33,12 @@ for dir in ../backgrounds/aurora/*; do
   ln -s "${dir}" ../wallpapers/
 done
 
+# FIXME
 # symlink the deleted AI slop with it's replacement
-cd /output/usr/share
-ln -s backgrounds/aurora/aurora-wallpaper-6 backgrounds/aurora/aurora-wallpaper-1
-# same reason as above
-ln -s backgrounds/aurora/aurora-wallpaper-1/ wallpapers/aurora-wallpaper-1
+#cd /output/usr/share
+#ln -s backgrounds/aurora/aurora-wallpaper-6 ../backgrounds/aurora/aurora-wallpaper-1
+## same reason as above
+#ln -s backgrounds/aurora/aurora-wallpaper-1/ wallpapers/aurora-wallpaper-1
 
 EOF
 
