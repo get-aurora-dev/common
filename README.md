@@ -1,4 +1,4 @@
-# bluefin-common
+# WIP - aurora-common
 
 Shared OCI layer containing common configuration files used across all Bluefin variants (bluefin, bluefin-dx, bluefin-lts).
 
