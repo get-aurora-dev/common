@@ -2,7 +2,7 @@ FROM docker.io/library/alpine:latest@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be5
 
 RUN apk add --no-cache curl jq zstd tar coreutils
 
-COPY --from=ghcr.io/ublue-os/artwork/aurora-wallpapers:latest / /wallpapers
+COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest / /wallpapers
 
 RUN set -xeuo pipefail && \
     cd /wallpapers && \
