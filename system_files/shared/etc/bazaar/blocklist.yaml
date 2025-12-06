@@ -1,37 +1,37 @@
 # For the rationale about what is included in this list, see https://github.com/ublue-os/aurora/issues/786
 blocklists:
   - block:
-    - com.visualstudio.code
-    - com.visualstudio.code-oss
-    - com.vscodium.codium
-    - com.vscodium.codium-insiders
+    - app.devsuite.Ptyxis
+    - com.google.AndroidStudio
+    - com.helix_editor.Helix
     - com.jetbrains.CLion
     - com.jetbrains.DataGrip
     - com.jetbrains.GoLand
     - com.jetbrains.IntelliJ-IDEA-Community
     - com.jetbrains.IntelliJ-IDEA-Ultimate
-    - com.jetbrains.PyCharm-Professional
-    - com.jetbrains.WebStorm
     - com.jetbrains.PhpStorm
     - com.jetbrains.PyCharm-Community
+    - com.jetbrains.PyCharm-Professional
     - com.jetbrains.Rider
     - com.jetbrains.RubyMine
     - com.jetbrains.RustRover
-    - com.google.AndroidStudio
-    - io.neovim.nvim
-    - org.vim.Vim
-    - io.github.zyedidia.micro
-    - com.helix_editor.Helix
-    - org.gnu.emacs
-    - app.devsuite.Ptyxis
-    - org.kde.konsole
-    - org.kde.dolphin
+    - com.jetbrains.WebStorm
+    - com.visualstudio.code
+    - com.visualstudio.code-oss
+    - com.vscodium.codium
+    - com.vscodium.codium-insiders
     - dev.lizardbyte.app.Sunshine
+    - io.github.kolunmi.Bazaar
+    - io.github.zyedidia.micro
+    - io.neovim.nvim
     - org.freedesktop.fwupd
-    - org.kde.kate
+    - org.gnu.emacs
     - org.kde.ark
+    - org.kde.dolphin
     - org.kde.filelight
+    - org.kde.kate
     - org.kde.kfind
+    - org.kde.konsole
     - org.kde.kwalletmanager
     - org.kde.kwalletmanager5
-    - io.github.kolunmi.Bazaar
+    - org.vim.Vim
