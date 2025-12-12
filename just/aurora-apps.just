@@ -168,6 +168,7 @@ install-opentabletdriver:
         tar --strip-components=1 -xvzf /tmp/OpenTabletDriver/opentabletdriver.tar.gz -C /tmp/OpenTabletDriver && \
         pkexec cp /tmp/OpenTabletDriver/etc/udev/rules.d/70-opentabletdriver.rules /etc/udev/rules.d/71-opentabletdriver.rules && \
         rm -rf /tmp/OpenTabletDriver && \
+        rpm-ostree kargs --append-if-missing=modprobe.blacklist=hid_uclogic --append-if-missing=modprobe.blacklist=wacom && \
         flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo && \
         flatpak --system install -y flathub net.opentabletdriver.OpenTabletDriver && \
         mkdir -p $HOME/.config/OpenTabletDriver && \
@@ -179,6 +180,7 @@ install-opentabletdriver:
     elif [[ "${OPTION,,}" =~ ^uninstall ]]; then
         echo "Uninstalling OpenTabletDriver..."
         pkexec rm /etc/udev/rules.d/71-opentabletdriver.rules && \
+        rpm-ostree kargs --delete-if-present=modprobe.blacklist=hid_uclogic --delete-if-present=modprobe.blacklist=wacom && \
         flatpak --system remove -y flathub net.opentabletdriver.OpenTabletDriver
     else
         echo "Have a good day :)!"
