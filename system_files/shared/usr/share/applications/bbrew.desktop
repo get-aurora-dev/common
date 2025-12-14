@@ -6,5 +6,5 @@ Icon=bbrew
 Terminal=true
 Type=Application
 Categories=Development;System;
-Keywords=homebrew;brew;package
+Keywords=homebrew;brew;package;
 StartupNotify=false
