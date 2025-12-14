@@ -18,11 +18,8 @@ RUN set -xeuo pipefail && \
     rm -rf /wallpapers
 
 FROM scratch AS ctx
-
+COPY --from=ghcr.io/projectbluefin/common:latest /system_files/shared /system_files/shared
 COPY --from=builder /output/ /wallpapers
-
-COPY /brew /brew
 COPY /flatpaks /flatpaks
-COPY /just /just
 COPY /logos /logos
 COPY /system_files /system_files
