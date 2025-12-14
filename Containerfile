@@ -1,8 +1,8 @@
-FROM docker.io/library/alpine:latest@sha256:4b7ce07002c69e8f3d704a9c5d6fd3053be500b7f1c69fc0d80990c2ad8dd412 AS builder
+FROM docker.io/library/alpine:latest AS builder
 
 RUN apk add --no-cache curl jq zstd tar coreutils
 
-COPY --from=ghcr.io/ublue-os/artwork/aurora-wallpapers:latest / /wallpapers
+COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest / /wallpapers
 
 RUN set -xeuo pipefail && \
     cd /wallpapers && \
