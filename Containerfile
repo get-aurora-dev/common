@@ -13,16 +13,13 @@ RUN set -xeuo pipefail && \
     for dir in aurora/*; do \
       ln -sr "/output/usr/share/backgrounds/${dir}" /output/usr/share/wallpapers/; \
     done && \
-    ln -sr /output/usr/share/backgrounds/aurora/aurowa-wallpaper-6/ /output/usr/share/backgrounds/aurora/aurora-wallpaper-1 && \
+    ln -sr /output/usr/share/backgrounds/aurora/aurora-wallpaper-6/ /output/usr/share/backgrounds/aurora/aurora-wallpaper-1 && \
     ln -sr /output/usr/share/backgrounds/aurora/aurora-wallpaper-1/ /output/usr/share/wallpapers/ && \
     rm -rf /wallpapers
 
 FROM scratch AS ctx
-
+COPY --from=ghcr.io/projectbluefin/common:latest /system_files/shared /system_files/shared
 COPY --from=builder /output/ /wallpapers
-
-COPY /brew /brew
 COPY /flatpaks /flatpaks
-COPY /just /just
 COPY /logos /logos
 COPY /system_files /system_files

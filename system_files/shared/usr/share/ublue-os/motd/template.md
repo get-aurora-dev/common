@@ -1,6 +1,6 @@
 # Welcome to Aurora
 
-🔭  `%IMAGE_NAME%:%IMAGE_TAG%`
+🔭 `${MOTD_IMAGE_NAME}:${MOTD_IMAGE_TAG}`
 Hello, stargazer.
 
 |  Command | Description |
@@ -10,11 +10,9 @@ Hello, stargazer.
 | `ujust aurora-cli` | Enable terminal bling |
 | `brew help` | Manage command line packages |
 
-%TIP%
+${MOTD_TIP}
 
 - **󰊤** [Issues](https://github.com/ublue-os/aurora/issues)
 - **󰈙** [Documentation](https://docs.getaurora.dev/guides/basic-usage)
 - **󰊌** [Discuss](https://universal-blue.discourse.group/)
 - **󰙯** [Discord](https://discord.com/invite/WEu6BdFEtp)
-
-%KEY_WARN%
