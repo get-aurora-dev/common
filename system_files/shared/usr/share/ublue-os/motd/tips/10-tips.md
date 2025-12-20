@@ -20,10 +20,7 @@ Performance profiling tools are built-in: try `sysprof`, `bpftrace`, and other d
 Switch shells safely: change your shell in [Terminal settings instead of system-wide](https://tim.siosm.fr/blog/2023/12/22/dont-change-defaut-login-shell/)
 VS Code comes with devcontainers extension pre-installed - perfect for containerized development
 Container development is OS-agnostic - your devcontainers work on Linux, macOS, and Windows
-Check out [DevPod](https://flathub.org/en/apps/sh.loft.devpod) for open-source, client-only development environments that work with any IDE
-`ujust aurora-k8s` gets you started with Kubernetes development tools like `kind` and `kubectl`
-`ujust aurora-ai` installs a selection of AI tools
-`ujust aurora-fonts` installs a well-curated collection of monospace fonts
+Check out `ujust bbrew` for curated selections of development and command line apps
 Open a folder with Clapgrep (Found in the Bazaar App Store) for super powerful search
 Aurora separates the OS from your development environment - embrace the cloud-native workflow
 Really love our wallpapers? Donate to [Chandeleer](https://ko-fi.com/chandeleer)
