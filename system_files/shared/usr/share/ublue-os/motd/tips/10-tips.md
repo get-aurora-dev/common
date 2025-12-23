@@ -1,5 +1,5 @@
 Aurora is your gateway to Kubernetes 󱃾 `kind create cluster` to [get started](https://kind.sigs.k8s.io/)
-`ujust install-k8s-dev-tools` gets you started with Kubernetes development tools like kind and kubectl
+`ujust bbrew` and select `k8s-tools` that will get you started with Kubernetes development tools like kind and kubectl
 Aurora is your gateway to Cloud Native - find your flock at [landscape.cncf.io](https://l.cncf.io)
 Need more in-depth technical information?~Check out the [Aurora docs](https://docs.getaurora.dev)
 Like servers? Check out [ucore](https://github.com/ublue-os/ucore)
@@ -24,3 +24,5 @@ Check out `ujust bbrew` for curated selections of development and command line a
 Open a folder with Clapgrep (Found in the Bazaar App Store) for super powerful search
 Aurora separates the OS from your development environment - embrace the cloud-native workflow
 Really love our wallpapers? Donate to [Chandeleer](https://ko-fi.com/chandeleer)
+`ujust jetbrains-toolbox` installs JetBrains tools in your home directory, all ready to go!
+Check out `ujust bbrew` for curated selections of development and command line apps
