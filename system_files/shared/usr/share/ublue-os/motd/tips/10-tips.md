@@ -1,5 +1,5 @@
 Aurora is your gateway to Kubernetes 󱃾 `kind create cluster` to [get started](https://kind.sigs.k8s.io/)
-`ujust install-k8s-dev-tools` gets you started with Kubernetes development tools like kind and kubectl
+`ujust bbrew` and select `k8s-tools` that will get you started with Kubernetes development tools like kind and kubectl
 Aurora is your gateway to Cloud Native - find your flock at [landscape.cncf.io](https://l.cncf.io)
 Need more in-depth technical information?~Check out the [Aurora docs](https://docs.getaurora.dev)
 Like servers? Check out [ucore](https://github.com/ublue-os/ucore)
