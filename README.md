@@ -8,8 +8,8 @@ This layer builds on top of `ghcr.io/projectbluefin/common` and includes:
 
 - `system_files/shared/` - Configuration shared between Aurora and Aurora-DX
 - `system_files/dx/` - Aurora-DX specific configuration
-- `wallpapers/` - Aurora wallpapers from aurora-wallpapers repository
-- `flatpaks/` - Flatpak definitions
+- `wallpapers/` - Aurora wallpapers from [artwork repo](https://github.com/ublue-os/artwork)
+- `flatpaks/` - Flatpak definitions used for including flatpaks for the ISOs and `ujust install-system-flatpaks`
 - `logos/` - Aurora branding assets
 
 ## Usage in Downstream Projects
@@ -17,7 +17,7 @@ This layer builds on top of `ghcr.io/projectbluefin/common` and includes:
 Aurora images reference this layer in their Containerfiles:
 
 ```dockerfile
-FROM ghcr.io/ublue-os/aurora-common:latest AS aurora-common
+FROM ghcr.io/get-aurora-dev/aurora-common:latest AS aurora-common
 
 # Copy shared configuration
 COPY --from=aurora-common /system_files/shared /
