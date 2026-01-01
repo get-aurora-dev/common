@@ -390,7 +390,7 @@ setup-sunshine ACTION="":
 
 # Toggle between Bazaar and Discover software stores
 [group('Apps')]
-toggle-software-store ACTION="":
+_toggle-software-store ACTION="":
     #!/usr/bin/env bash
     source /usr/lib/ujust/ujust.sh
 
