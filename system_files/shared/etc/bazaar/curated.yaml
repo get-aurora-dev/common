@@ -102,8 +102,18 @@ css: |
     background-image: linear-gradient(to right bottom, #8b6fab, #7a77b3, #687fb6, #5985b6, #4d8bb3, #4892b4, #4698b3, #499eb1, #4da8b3, #55b2b4, #61bbb4, #6fc4b3);
   }
 
+  .dev-section app-tile-installed-pill {
+    background-color: #cbabff;
+    color: var(--fg-color);
+  }
+
   .dev-section-dark {
     background: linear-gradient(to right bottom, #8b6fab, #7a68a6, #6861a0, #555a9a, #405494, #315c9a, #1f649e, #006ca1, #0084ac, #089ab1, #43b0b2, #6fc4b3);
+  }
+
+  .dev-section-dark app-tile-installed-pill {
+    background-color: #084152;
+    color: var(--fg-color);
   }
 
   .ai-section {
