@@ -15,6 +15,9 @@ RUN set -xeuo pipefail && \
     done && \
     ln -sr /output/usr/share/backgrounds/aurora/aurora-wallpaper-6/ /output/usr/share/backgrounds/aurora/aurora-wallpaper-1 && \
     ln -sr /output/usr/share/backgrounds/aurora/aurora-wallpaper-1/ /output/usr/share/wallpapers/ && \
+    ln -sr /output/usr/share/backgrounds/aurora/aurora-wallpaper-9/contents/images/3840x2160.jxl /output/usr/share/backgrounds/default.jxl && \
+    ln -sr /output/usr/share/backgrounds/aurora/aurora-wallpaper-9/contents/images/3840x2160.jxl /output/usr/share/backgrounds/default-dark.jxl && \
+    ln -sr /output/usr/share/backgrounds/aurora/aurora.xml /output/usr/share/backgrounds/default.xml && \
     rm -rf /wallpapers
 
 FROM scratch AS ctx
