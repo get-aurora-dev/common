@@ -76,4 +76,4 @@ if [[ "${OPTION,,}" =~ ^cancel ]]; then
     echo "You have chosen to cancel the Incus installation process"
     exit 0
 fi
-echo -e "\nIncus has been ${green}${b}installed${n}. You can now run 'incus' to manage your containers."
+echo -e "\nIncus has been $installed. You can now run 'incus' to manage your containers."
