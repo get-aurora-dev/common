@@ -3,7 +3,6 @@ set ignore-comments := true
 
 _default:
     #!/usr/bin/bash
-    source /usr/lib/ujust/libformatting.sh
     echo "https://docs.getaurora.dev/guides/basic-usage/#using-ujust-in-aurora"
     ujust --list --list-heading $'Available commands:\n' --list-prefix $' - '
 

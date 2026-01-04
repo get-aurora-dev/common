@@ -14,7 +14,6 @@
 [group('System')]
 benchmark:
     #!/usr/bin/env bash
-    source /usr/lib/ujust/ujust.sh
     if ! type -P "stress-ng" &>/dev/null ; then
         if gum confirm "Stress does not seem to be on your path, do you wish to install it?" ; then
             set -eu
@@ -192,7 +191,6 @@ rebase-helper:
 toggle-tailscale:
     #!/bin/bash
     set -euo pipefail
-    source /usr/lib/ujust/ujust.sh
     source /usr/lib/os-release
 
     TAILSCALED_STATUS="$(systemctl is-enabled tailscaled || true )"
@@ -201,7 +199,7 @@ toggle-tailscale:
         TAILSCALED="Installed"
     else
         TAILSCALED="Not Found"
-        echo "${b}${red}Unable to enable or disable Tailscale.${n}"
+        echo "Unable to enable or disable Tailscale."
         echo "The tailscaled service must be present and either enabled or disabled to run this script."
         echo "tailscaled service status: $TAILSCALED_STATUS"
     fi
@@ -209,13 +207,13 @@ toggle-tailscale:
 
     if [ "$TAILSCALED" == "Installed" ]; then
         echo "Enable or disable Tailscale?"
-        TS_OPTION=$(Choose Enable Disable)
+        TS_OPTION=$(gum choose "Enable" "Disable")
 
         if [ "$TS_OPTION" = "Enable" ]; then
             systemctl enable --now tailscaled
             TAILSCALED_STATUS="$(systemctl is-enabled tailscaled || true )"
             if [ "$TAILSCALED_STATUS" == "enabled" ]; then
-                echo "${b}${green}Tailscale is enabled.${n}"
+                echo "Tailscale is enabled."
                 echo "If this is your first time using Tailscale, setup is necessary."
                 echo "Refer to Tailscale's documentation at https://tailscale.com/kb/1346/start."
             fi
@@ -223,7 +221,7 @@ toggle-tailscale:
             systemctl disable --now tailscaled
             TAILSCALED_STATUS="$(systemctl is-enabled tailscaled || true )"
             if [ "$TAILSCALED_STATUS" == "disabled" ]; then
-                echo "${b}${red}Tailscale is disabled.${n}"
+                echo "Tailscale is disabled."
             fi
         fi
     fi
@@ -232,8 +230,6 @@ toggle-tailscale:
 [group('System')]
 toggle-dinosaurs hemisphere="north":
     #!/bin/bash
-    source /usr/lib/ujust/ujust.sh
-
     if [[ "{{ hemisphere }}" != "north" && "{{ hemisphere }}" != "south" ]]; then
         echo "Error: Invalid hemisphere '{{ hemisphere }}'. Must be 'north' or 'south'."
         exit 1
@@ -245,7 +241,7 @@ toggle-dinosaurs hemisphere="north":
 
     if [ "$DINOSAUR_STATUS" == "enabled" ]; then
         echo "Disable Bluefin dinosaur wallpapers?"
-        OPTION=$(Choose Disable Cancel)
+        OPTION=$(gum choose "Disable" "Cancel")
         if [ "$OPTION" = "Disable" ]; then
             systemctl --user disable --now bluefin-wallpaper@{{ hemisphere }}.service
 
@@ -259,20 +255,20 @@ toggle-dinosaurs hemisphere="north":
                     d.writeConfig(\"Image\", \"file:///usr/share/backgrounds/default.jxl\");
                 }
               "
-            echo "${b}${red}Bluefin dinosaur wallpapers ({{ hemisphere }}ern hemisphere) disabled.${n}"
+            echo "Bluefin dinosaur wallpapers ({{ hemisphere }}ern hemisphere) disabled."
             echo "Disabling Dinosaurs. Deploying Coneheads again."
             echo "Wallpaper files remain in ~/.local/share/wallpapers/Bluefin/"
         fi
     else
         echo "Enable Bluefin dinosaur wallpapers for the {{ hemisphere }}ern hemisphere?"
-        OPTION=$(Choose Enable Cancel)
+        OPTION=$(gum choose "Enable" "Cancel")
         if [ "$OPTION" = "Enable" ]; then
             mkdir -p ~/.local/share/wallpapers/Bluefin
             systemctl --user enable --now bluefin-wallpaper@{{ hemisphere }}.service
 
             sleep 1
             if systemctl --user is-active --quiet bluefin-wallpaper@{{ hemisphere }}.service; then
-                echo "${b}${green}Bluefin dinosaur wallpapers ({{ hemisphere }}ern hemisphere) enabled!${n}"
+                echo "Bluefin dinosaur wallpapers ({{ hemisphere }}ern hemisphere) enabled!"
                 echo "Wallpapers will be downloaded to ~/.local/share/wallpapers/Bluefin/"
                 echo "The wallpaper will update automatically each month."
                 filename="$HOME/.local/share/wallpapers/Bluefin/{{ hemisphere }}.avif"
@@ -287,7 +283,7 @@ toggle-dinosaurs hemisphere="north":
                     }
                 "
             else
-                echo "${b}${red}Failed to start bluefin-wallpaper service.${n}"
+                echo "Failed to start bluefin-wallpaper service."
                 echo "Check the service status with:"
                 echo "  systemctl --user status bluefin-wallpaper@{{ hemisphere }}.service"
             fi
@@ -356,13 +352,12 @@ toggle-iwd:
 [group('Apps')]
 setup-sunshine ACTION="":
     #!/usr/bin/bash
-    source /usr/lib/ujust/ujust.sh
     SERVICE_STATE="$(systemctl is-enabled --user sunshine.service)"
     OPTION={{ ACTION }}
     if [ "$SERVICE_STATE" == "enabled" ]; then
-        SERVICE_STATE="${green}${b}Enabled${n}"
+        SERVICE_STATE="Enabled"
     else
-        SERVICE_STATE="${red}${b}Disabled${n}"
+        SERVICE_STATE="Disabled"
     fi
     if [ "$OPTION" == "help" ]; then
       echo "Usage: ujust setup-sunshine <option>"
@@ -374,7 +369,7 @@ setup-sunshine ACTION="":
       exit 0
     elif [ "$OPTION" == "" ]; then
       echo "Service is $SERVICE_STATE"
-      OPTION=$(Choose "Enable" "Disable" "Open Portal" "Exit")
+      OPTION=$(gum choose "Enable" "Disable" "Open Portal" "Exit")
     fi
     if [[ "${OPTION,,}" =~ ^enable ]]; then
       systemctl enable --user --now sunshine.service
@@ -392,7 +387,6 @@ setup-sunshine ACTION="":
 [group('Apps')]
 _toggle-software-store ACTION="":
     #!/usr/bin/env bash
-    source /usr/lib/ujust/ujust.sh
 
     discover_apps=(
         "org.kde.discover.desktop"
@@ -412,10 +406,10 @@ _toggle-software-store ACTION="":
 
     if [ "$discover_active" = true ]; then
         CURRENT_STATE="discover"
-        CURRENT_STATE_PRETTY="${blue}${b}Discover${n}"
+        CURRENT_STATE_PRETTY="Discover"
     else
         CURRENT_STATE="bazaar"
-        CURRENT_STATE_PRETTY="${green}${b}Bazaar${n}"
+        CURRENT_STATE_PRETTY="Bazaar"
     fi
 
     OPTION={{ ACTION }}
@@ -429,14 +423,14 @@ _toggle-software-store ACTION="":
         echo "${bold}Software Store Toggle${normal}"
         echo "Currently active: $CURRENT_STATE_PRETTY"
         if [ "$CURRENT_STATE" == "discover" ]; then
-            OPTION=$(Choose "Switch to Bazaar" "Cancel")
+            OPTION=$(gum choose "Switch to Bazaar" "Cancel")
         else
-            OPTION=$(Choose "Switch to Discover" "Cancel")
+            OPTION=$(gum choose "Switch to Discover" "Cancel")
         fi
     fi
 
     if [[ "${OPTION,,}" =~ ^(switch.*bazaar|bazaar) ]]; then
-        echo "${green}${b}Switching to Bazaar...${n}"
+        echo "$Switching to Bazaar..."
         # Remove Discover files from ~/.local (hides them)
         for app in "${discover_apps[@]}"; do
             if [ -f "$HOME/.local/share/applications/${app}" ]; then
@@ -462,10 +456,10 @@ _toggle-software-store ACTION="":
         kwriteconfig6 --file krunnerrc --group Plugins --key bazaarrunnerEnabled true
         systemctl --user restart plasma-krunner.service plasma-plasmashell.service
 
-        echo "${green}${b}Bazaar is now active${n}"
+        echo "Bazaar is now active"
 
     elif [[ "${OPTION,,}" =~ ^(switch.*discover|discover) ]]; then
-        echo "${blue}${b}Switching to Discover...${n}"
+        echo "Switching to Discover..."
         # Copy Discover files from /usr to ~/.local (shows them)
         for app in "${discover_apps[@]}"; do
             if [ -f "/usr/share/applications/${app}.disabled" ]; then
@@ -484,7 +478,7 @@ _toggle-software-store ACTION="":
         # Hide Bazaar by creating NoDisplay override
         cp /usr/share/applications/io.github.kolunmi.Bazaar.desktop "$HOME/.local/share/applications/io.github.kolunmi.Bazaar.desktop"
         desktop-file-edit --set-key=NoDisplay --set-value=true "$HOME/.local/share/applications/io.github.kolunmi.Bazaar.desktop"
-        echo "${blue}${b}Discover is now active${n}"
+        echo "Discover is now active"
 
     elif [[ "${OPTION,,}" =~ ^cancel ]]; then
         echo "No changes made."

@@ -1,5 +1,4 @@
 #!/bin/bash
-source /usr/lib/ujust/ujust.sh
 GRUB_STATE="$(sudo grub2-editenv list | grep "^menu_auto_hide=")"
 if [[ "$GRUB_STATE" == "menu_auto_hide=1" ]]; then
     GRUB_STATE="${bold}Hidden${normal}"
@@ -10,7 +9,7 @@ else
 fi
 echo "${bold}Grub menu configuration${normal}"
 echo "Grub menu is set to: $GRUB_STATE"
-OPTION=$(Choose "Always Hide Grub" "Hide Grub" "Show Grub" "Cancel")
+OPTION=$(gum choose "Always Hide Grub" "Hide Grub" "Show Grub" "Cancel")
 if [[ "${OPTION,,}" =~ ^always ]]; then
     sudo grub2-editenv - set menu_auto_hide=2
     GRUB_STATE="${bold}Always Hidden${normal}"
