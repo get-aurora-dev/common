@@ -34,5 +34,6 @@ blocklists:
     - org.kde.konsole
     - org.kde.kwalletmanager
     - org.kde.kwalletmanager5
+    - net.mullvad.MullvadBrowser
     - org.torproject.torbrowser-launcher
     - org.vim.Vim
