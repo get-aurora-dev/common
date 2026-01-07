@@ -55,7 +55,6 @@ devmode:
 [group('System')]
 toggle-devmode:
     #!/usr/bin/env bash
-    source /usr/lib/ujust/ujust.sh
     CURRENT_IMAGE=$(rpm-ostree status -b --json | jq -r '.deployments[0]."container-image-reference"')
     if grep -q "/var/ublue-os/image" <<< $CURRENT_IMAGE ; then
         bash -c "cat <<EOF
@@ -72,7 +71,7 @@ toggle-devmode:
     fi
     echo "Developer mode is currently ${CURRENT_STATE}"
     echo "Enable or Disable developer mode"
-    OPTION=$(Choose Enable Disable)
+    OPTION=$(gum choose "Enable" "Disable")
     if [[ "${OPTION,,}" =~ ^enable ]]; then
         if [ "$CURRENT_STATE" = "enabled" ] ; then
             echo "You are already on a developer image"
