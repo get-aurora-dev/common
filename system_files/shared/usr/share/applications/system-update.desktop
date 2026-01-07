@@ -1,7 +1,9 @@
 [Desktop Entry]
 Type=Application
 Name=System Update
+Name[fr]=Mises à jour
 Comment=Update Aurora, Flatpaks, Distrobox containers, and more
+Comment[fr]=Met à jour Aurora, les applications, les conteneurs, etc.
 Icon=aurora-update
 Categories=ConsoleOnly;System;
 Terminal=true
