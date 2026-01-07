@@ -55,50 +55,31 @@ devmode:
 [group('System')]
 toggle-devmode:
     #!/usr/bin/env bash
-    source /usr/lib/ujust/ujust.sh
-    CURRENT_IMAGE=$(rpm-ostree status -b --json | jq -r '.deployments[0]."container-image-reference"')
-    if grep -q "/var/ublue-os/image" <<< $CURRENT_IMAGE ; then
-        bash -c "cat <<EOF
-    Before we can switch to the Aurora Developer Experience
-    the current system needs an update. Please run 'ujust update'
-    and reboot your system when the update is finished
-    EOF"
-        exit
-    fi
-    if /bin/grep -q "\-dx" <<< $CURRENT_IMAGE ; then
-        CURRENT_STATE="enabled"
-    else
-        CURRENT_STATE="disabled"
-    fi
-    echo "Developer mode is currently ${CURRENT_STATE}"
-    echo "Enable or Disable developer mode"
-    OPTION=$(Choose Enable Disable)
-    if [[ "${OPTION,,}" =~ ^enable ]]; then
-        if [ "$CURRENT_STATE" = "enabled" ] ; then
-            echo "You are already on a developer image"
-            exit 0
-        fi
-        echo "Rebasing to a developer image"
-        NEW_IMAGE=$(sed "s/aurora/aurora-dx/" <<< $CURRENT_IMAGE)
-        rpm-ostree rebase $NEW_IMAGE
-        echo -e "\nUse `ujust dx-group` to add your user to the correct groups and complete the installation"
-    fi
-    if [[ "${OPTION,,}" =~ ^disable ]]; then
-        if [ "$CURRENT_STATE" != "enabled" ]; then
-            echo "You are currently not on a developer image"
-            exit 0
-        fi
+    IMAGE_INFO_FILE="${IMAGE_INFO_FILE:-/usr/share/ublue-os/image-info.json}"
+    IMAGE_NAME="$(jq -rc '."image-name"' "${IMAGE_INFO_FILE}")"
+    IMAGE_REF="$(jq -rc '."image-ref"' "${IMAGE_INFO_FILE}" | sed "s/.*ghcr/ghcr/")"
+    CURRENT_IMAGE="${IMAGE_REF}:$(jq -rc '."image-tag"' "${IMAGE_INFO_FILE}")"
+    set +e
+
+    if grep -q -E -e "dx$" <<< "${IMAGE_NAME}" ; then
+        gum confirm "Would you like to disable developer mode?" || exit 0
         echo "Rebasing to a non developer image"
-        # Remove -dx suffix from image, specifies ":" to mark the end of the image name
-        NEW_IMAGE=$(sed "s/\-dx//" <<< $CURRENT_IMAGE)
-        rpm-ostree rebase $NEW_IMAGE
+        NEW_IMAGE="$(sed "s/\-dx//" <<< $CURRENT_IMAGE)"
+        pkexec bootc switch --enforce-container-sigpolicy "${NEW_IMAGE}"
+        exit 0
     fi
+
+    gum confirm "Would you like to enable developer mode?" || exit 0
+    echo "Rebasing to a developer image"
+    NEW_IMAGE="$(sed "s/${IMAGE_NAME}/${IMAGE_NAME}-dx/" <<< "${CURRENT_IMAGE}")"
+    pkexec bootc switch --enforce-container-sigpolicy "${NEW_IMAGE}"
     if gum confirm "Do you want to also install the default development flatpaks?" ; then
-            ujust install-system-flatpaks 1
+        ujust install-system-flatpaks 1
     fi
-    if gum confirm "Do you want to install extra fonts?" ; then
-            ujust install-fonts
+    if gum confirm "Do you want to install extra monospace fonts?" ; then
+        brew bundle install --file=/usr/share/ublue-os/homebrew/fonts.Brewfile
     fi
+    echo "Use ujust dx-group to add your user to the correct groups and complete the installation"
 
 # Ptyxis terminal transparency
 [group('System')]
