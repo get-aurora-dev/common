@@ -24,6 +24,7 @@ blocklists:
     - io.github.kolunmi.Bazaar
     - io.github.zyedidia.micro
     - io.neovim.nvim
+    - net.mullvad.MullvadBrowser
     - org.freedesktop.fwupd
     - org.gnu.emacs
     - org.kde.ark
@@ -34,6 +35,5 @@ blocklists:
     - org.kde.konsole
     - org.kde.kwalletmanager
     - org.kde.kwalletmanager5
-    - net.mullvad.MullvadBrowser
     - org.torproject.torbrowser-launcher
     - org.vim.Vim
