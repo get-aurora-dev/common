@@ -70,5 +70,4 @@ FROM scratch AS ctx
 COPY --from=ghcr.io/projectbluefin/common:latest /system_files/shared /system_files/shared
 COPY --from=builder /out/wallpapers /wallpapers
 COPY --from=builder /out/logos /logos
-COPY /flatpaks /flatpaks
 COPY /system_files /system_files
