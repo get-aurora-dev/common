@@ -171,11 +171,6 @@ install-system-flatpaks $dx="dynamic":
         xargs flatpak --system -y install --reinstall --or-update < $TARGET_DEVMODE_FILE
     fi
 
-# Configure grub bootmenu visibility
-[group('System')]
-configure-grub:
-    @/usr/libexec/configure-grub.sh
-
 alias switch-stream := rebase-helper
 alias switch-streams := rebase-helper
 alias rollback-helper := rebase-helper
