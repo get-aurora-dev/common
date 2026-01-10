@@ -141,11 +141,6 @@ install-system-flatpaks $confirm="1" $dx_only="0":
     fi
     brew bundle --file="${TARGET_FLATPAK_FILE:-/usr/share/ublue-os/homebrew/system-flatpaks.Brewfile}"
 
-# Configure grub bootmenu visibility
-[group('System')]
-configure-grub:
-    @/usr/libexec/configure-grub.sh
-
 alias switch-stream := rebase-helper
 alias switch-streams := rebase-helper
 alias rollback-helper := rebase-helper
