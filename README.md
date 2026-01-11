@@ -4,13 +4,13 @@ Shared OCI layer containing configuration files for Aurora and Aurora-DX variant
 
 ## Repository Structure
 
-This layer builds on top of `ghcr.io/projectbluefin/common` and includes:
+This layer builds on top of `ghcr.io/projectbluefin/common` and `https://github.com/get-aurora-dev/branding` which includes:
 
 - `system_files/shared/` - Configuration shared between Aurora and Aurora-DX
 - `system_files/dx/` - Aurora-DX specific configuration
 - `wallpapers/` - Aurora wallpapers from [artwork repo](https://github.com/ublue-os/artwork)
 - `flatpaks/` - Flatpak definitions used for including flatpaks for the ISOs and `ujust install-system-flatpaks`
-- `logos/` - Aurora branding assets
+- `logos/` - Aurora Logos used in SDDM/Plasma Kickoff etc.
 
 ## Usage in Downstream Projects
 
