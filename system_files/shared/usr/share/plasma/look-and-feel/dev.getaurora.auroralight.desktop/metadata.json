@@ -8,10 +8,10 @@
             }
         ],
         "Category": "",
-        "Description": "Aurora - Theme variant of KDE BreezeDark",
-        "Id": "dev.getaurora.aurora.desktop",
+        "Description": "Aurora - Theme variant of KDE Breeze",
+        "Id": "dev.getaurora.auroralight.desktop",
         "License": "GPLv2+",
-        "Name": "Aurora",
+        "Name": "Aurora Light",
         "ServiceTypes": [
             "Plasma/LookAndFeel"
         ],
