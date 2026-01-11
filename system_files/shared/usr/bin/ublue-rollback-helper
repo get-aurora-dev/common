@@ -6,7 +6,7 @@ IMAGE_TAG="$(jq -r '."image-tag"' < "$IMAGE_INFO")"
 IMAGE_VENDOR="$(jq -r '."image-vendor"' < "$IMAGE_INFO")"
 IMAGE_REGISTRY="ghcr.io/${IMAGE_VENDOR}"
 
-set -x
+set -euo pipefail
 
 function list_tags() {
   local filter="$1"
