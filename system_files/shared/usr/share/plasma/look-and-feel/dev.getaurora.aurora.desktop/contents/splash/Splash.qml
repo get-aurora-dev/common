@@ -5,7 +5,7 @@
 */
 
 import QtQuick
-import org.kde.kirigami 2 as Kirigami
+import org.kde.kirigami as Kirigami
 
 Rectangle {
     id: root
@@ -64,6 +64,27 @@ Rectangle {
                 loops: Animation.Infinite
                 // Don't want it to animate at all if the user has disabled animations
                 running: Kirigami.Units.longDuration > 1
+            }
+        }
+        Row {
+            spacing: Kirigami.Units.largeSpacing
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+                margins: Kirigami.Units.gridUnit
+            }
+            Text {
+                color: "#eff0f1"
+                anchors.verticalCenter: parent.verticalCenter
+                text: i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "This is the first text the user sees while starting in the splash screen, should be translated as something short, is a form that can be seen on a product. Plasma is the project name so shouldn't be translated.", "Plasma made by KDE")
+                Accessible.name: text
+                Accessible.role: Accessible.StaticText
+            }
+            Image {
+                asynchronous: true
+                source: "images/kde.svgz"
+                sourceSize.height: Kirigami.Units.gridUnit * 2
+                sourceSize.width: Kirigami.Units.gridUnit * 2
             }
         }
     }
