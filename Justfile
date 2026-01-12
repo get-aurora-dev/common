@@ -4,6 +4,8 @@ just := just_executable()
 
 # Build the aurora-common container locally
 build:
+    git submodule update --init --recursive
+    git submodule update --remote
     podman build -t localhost/aurora-common:latest -f ./Containerfile .
 
 # Check the syntax of all Justfiles in the repository
