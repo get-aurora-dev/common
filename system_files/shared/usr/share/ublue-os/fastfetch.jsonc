@@ -119,6 +119,7 @@
     },
     {
       "type": "command",
+      "shell": "/usr/bin/bash",
       "text": "$EDITOR --version | head -1",
       "key": "",
       "keyColor": "",
