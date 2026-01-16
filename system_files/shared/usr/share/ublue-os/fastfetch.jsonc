@@ -1,26 +1,24 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "display": {
-    "separator": "  ",
-    "color": {
-      "keys": "38;2;87;160;198"
-    }
+    "separator": "  "
   },
   "modules": [
     {
       "type": "title",
       "key": "",
       "color": {
-        "user": "38;2;87;160;198",
-        "at": "white",
-        "host": "bright_green"
+        "user": "#b75761",
+        "at": "#a64c6a",
+        "host": "#4075bf"
       }
     },
     "break",
     {
       "type": "command",
-      "key": "󱋩",
-      "text": "/usr/bin/ublue-image-info.sh"
+      "key": "",
+      "text": "/usr/bin/ublue-image-info.sh",
+      "keyColor": "#ad67d7"
     },
     {
       "type": "os",
@@ -40,7 +38,8 @@
       "type": "command",
       "key": "󰔠",
       "text": "date -d$(ls -alct /var/log --time-style=full-iso|tail -1|awk '{print $6}') +'Forged on %b %d %G'",
-      "shell": "/bin/bash"
+      "shell": "/bin/bash",
+      "keyColor": ""
     },
     "break",
     {
@@ -53,8 +52,8 @@
     },
     {
       "type": "command",
-      "key": "",
-      "keyColor": "#ff5c00",
+      "key": "",
+      "keyColor": "#f66151",
       "text": "cat /usr/share/ublue-os/bazaar-install-count",
       "shell": "/bin/bash",
       "format": "Bazaar Installs: {1} (weekly)"
@@ -96,12 +95,20 @@
     "break",
     {
       "type": "de",
-      "key": "󰕮"
+      "key": "",
+      "keyColor": "#20a0f5"
     },
     {
       "type": "wm",
-      "key": ""
+      "key": "",
+      "keyColor": "#20a0f5"
     },
+    {
+      "type": "packages",
+      "key": "",
+      "disabled": ["rpm","brew"]
+    },
+    "break",
     {
       "type": "shell",
       "key": ""
@@ -111,9 +118,17 @@
       "key": ""
     },
     {
+      "type": "command",
+      "text": "$EDITOR --version | head -1",
+      "key": "",
+      "keyColor": "",
+      "format": "{1}"
+    },
+    {
       "type": "packages",
-      "key": "󰏖",
-      "disabled": ["rpm"]
+      "key": "",
+      "disabled": ["rpm","flatpak"],
+      "keyColor": "#fbb040"
     },
     "break",
     {
