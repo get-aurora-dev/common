@@ -3,6 +3,9 @@
   "display": {
     "separator": "  "
   },
+  "general": {
+    "dsForceDrm": true
+    },
   "modules": [
     {
       "type": "title",
