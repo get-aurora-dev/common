@@ -9,7 +9,7 @@ This layer builds on top of `ghcr.io/projectbluefin/common` and `https://github.
 - `system_files/shared/` - Configuration shared between Aurora and Aurora-DX
 - `system_files/dx/` - Aurora-DX specific configuration
 - `wallpapers/` - Aurora wallpapers from [artwork repo](https://github.com/ublue-os/artwork)
-- `flatpaks/` - Flatpak definitions used for including flatpaks for the ISOs and `ujust install-system-flatpaks`
+- `system_files/shared/usr/share/ublue-os/homebrew/` - Flatpak definitions used for including flatpaks for the ISOs and `ujust install-system-flatpaks`
 - `logos/` - Aurora Logos used in SDDM/Plasma Kickoff etc.
 
 ## Usage in Downstream Projects
@@ -29,7 +29,6 @@ COPY --from=aurora-common /system_files/dx /
 COPY --from=aurora-common /wallpapers /
 
 # Copy other assets as needed
-COPY --from=aurora-common /flatpaks /tmp/flatpaks
 COPY --from=aurora-common /logos /tmp/logos
 ```
 
