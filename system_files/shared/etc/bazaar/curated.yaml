@@ -357,5 +357,7 @@ rows:
           banner-text-valign: center
           banner-height: 550
           appids:
+            - ai.jan.Jan
             - com.jeffser.Alpaca
+            - ink.whis.Whis
             - io.github.qwersyk.Newelle
