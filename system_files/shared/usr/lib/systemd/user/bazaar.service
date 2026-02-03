@@ -1,13 +1,18 @@
 [Unit]
-Description=Bazaar background service
+Description=Bazaar background service for shell search results
 Documentation=https://github.com/kolunmi/bazaar
 After=graphical-session.target
-StartLimitBurst=10
+After=dbus.service
+Requires=dbus.service
+PartOf=graphical-session.target
+StartLimitBurst=3
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=flatpak run --command=bazaar io.github.kolunmi.Bazaar --no-window
+ExecCondition=/usr/bin/flatpak info io.github.kolunmi.Bazaar
+ExecStart=/usr/bin/flatpak run --command=bazaar io.github.kolunmi.Bazaar --no-window
+ExecStop=/usr/bin/flatpak kill io.github.kolunmi.Bazaar
 StandardOutput=journal
 
 [Install]
