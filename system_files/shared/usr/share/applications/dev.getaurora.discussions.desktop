@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+NoDisplay=false
+Terminal=false
+Exec=/usr/bin/xdg-open https://github.com/ublue-os/aurora/discussions
+Icon=aurora-discussions
+Name=Community
+Name[fr]=Communauté
+Comment=Aurora Discussions
+Categories=Utility;
+Keywords=Forum;Help;Announcements;News;Updates

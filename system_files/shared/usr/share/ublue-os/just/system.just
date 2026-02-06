@@ -259,7 +259,7 @@ toggle-dinosaurs hemisphere="north":
 configure-boot-to-windows:
     mkdir -p $HOME/.local/share/applications
     cp -r /usr/share/applications/boot-to-windows.desktop $HOME/.local/share/applications
-    sed -i 's/Hidden=true/Hidden=false/' $HOME/.local/share/applications/boot-to-windows.desktop
+    sed -i 's/Hidden=true/Hidden=false/' $HOME/.local/share/applications/dev.getaurora.boot-to-windows.desktop
 
 # Toggle IWD
 [group('System')]
