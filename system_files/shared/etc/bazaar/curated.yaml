@@ -1,4 +1,4 @@
-# https://github.com/kolunmi/bazaar/blob/main/docs/overview.org
+# https://github.com/kolunmi/bazaar/blob/main/docs/overview.md
 
 css: |
   .global-section banner {
@@ -19,12 +19,12 @@ css: |
   }
 
   .global-section title {
-    text-shadow: 1px 1px 4px rgba(0, 0, 5, 1);
+    text-shadow: 2px 2px 4px rgba(0, 0, 5, 1);
   }
 
   .global-section subtitle {
     font-weight: 400;
-    text-shadow: 4px 4px 8px rgba(0, 0, 5, 1);
+    text-shadow: 2px 2px 4px rgba(0, 0, 5, 1);
   }
 
   .global-section app-tile > button {
@@ -112,6 +112,22 @@ css: |
 
   .dev-section-dark app-tile-installed-pill {
     background-color: #084152;
+  }
+
+  .kde-section title,
+  .kde-section subtitle,
+  .kde-section-dark title,
+  .kde-section-dark subtitle {
+    color: #004c4c;
+    text-shadow: 1px 1px 4px #ffffff;
+  }
+
+  .kde-section {
+    background: #27b5fc;
+  }
+
+  .kde-section-dark {
+    background: #1b89f3;
   }
 
   .ai-section {
@@ -339,6 +355,37 @@ rows:
             - cc.arduino.IDE2
             - io.github.plrigaux.sysd-manager
             - me.iepure.devtoolbox
+
+  - sections:
+      - expand-horizontally: true
+        classes:
+          - global-section
+        light-classes:
+          - kde-section
+        dark-classes:
+          - kde-section-dark
+        category:
+          title: "KDE Apps"
+          subtitle: "Our favorite apps picked from KDE Developers"
+          light-banner: file:///run/host/etc/bazaar/09-aurora-bazaar-light.png
+          dark-banner: file:///run/host/etc/bazaar/09-aurora-bazaar-dark.png
+          banner-fit: cover
+          banner-text-halign: start
+          banner-text-valign: end
+          banner-height: 750
+          enable-bulk-install: true
+          appids:
+            - org.kde.elisa
+            - org.kde.kasts
+            - org.kde.kamoso
+            - org.kde.CrowTranslate
+            - org.kde.marknote
+            - org.kde.alligator
+            - org.kde.tokodon
+            - org.kde.neochat
+            - org.kde.keysmith
+            - org.kde.merkuro
+            - org.kde.kid3
 
   - sections:
       - expand-horizontally: true
