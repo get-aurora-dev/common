@@ -1,13 +1,13 @@
 loadTemplate("org.kde.plasma.desktop.defaultPanel")
 
-var allPanels = panels();
+const allPanels = panels();
 
 for (var i = 0; i < allPanels.length; ++i) {
     const panel = allPanels[i];
-    var widgets = panel.widgets();
+    const widgets = panel.widgets();
 
     for (var j = 0; j < widgets.length; ++j) {
-        var widget = widgets[j];
+        const widget = widgets[j];
 
         if (widget.type === "org.kde.plasma.icontasks") {
             widget.currentConfigGroup = ["General"];
