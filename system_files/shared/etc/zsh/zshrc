@@ -209,8 +209,10 @@ fi
 
 # Starship
 if type "starship" > /dev/null; then
+  unset STARSHIP_SHELL
   eval "$(starship init zsh)"
 fi
+
 
 #####################
 # User configuration
