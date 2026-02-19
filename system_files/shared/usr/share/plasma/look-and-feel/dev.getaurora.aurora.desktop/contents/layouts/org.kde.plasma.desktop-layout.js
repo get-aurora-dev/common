@@ -2,11 +2,11 @@ loadTemplate("org.kde.plasma.desktop.defaultPanel")
 
 const allPanels = panels();
 
-for (var i = 0; i < allPanels.length; ++i) {
+for (let i = 0; i < allPanels.length; ++i) {
     const panel = allPanels[i];
     const widgets = panel.widgets();
 
-    for (var j = 0; j < widgets.length; ++j) {
+    for (let j = 0; j < widgets.length; ++j) {
         const widget = widgets[j];
 
         if (widget.type === "org.kde.plasma.icontasks") {
