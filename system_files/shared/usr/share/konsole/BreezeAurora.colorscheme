@@ -92,9 +92,10 @@ Color=61,174,233
 Anchor=0.5,0.5
 Blur=false
 ColorRandomization=false
-Description=Breeze-copy
+Description=Breeze Aurora
 FillStyle=Tile
-Opacity=1
+Opacity=0.95
 Wallpaper=
 WallpaperFlipType=NoFlip
 WallpaperOpacity=1
+
