@@ -325,6 +325,7 @@ rows:
             - au.stevetech.yafi
             - io.github.pwr_solaar.solaar
             - com.infinipaint.infinipaint
+            - org.gnome.Firmware
 
   - sections:
       - expand-horizontally: true
