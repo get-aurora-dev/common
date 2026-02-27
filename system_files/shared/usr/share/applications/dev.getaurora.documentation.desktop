@@ -2,7 +2,7 @@
 Type=Application
 NoDisplay=false
 Terminal=false
-Exec=/usr/bin/xdg-open https://docs.getaurora.dev/guides/basic-usage
+Exec=/usr/bin/xdg-open https://docs.getaurora.dev
 Icon=aurora-docs
 Name=Documentation
 Comment=Aurora documentation
