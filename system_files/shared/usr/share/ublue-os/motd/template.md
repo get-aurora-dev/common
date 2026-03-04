@@ -7,7 +7,7 @@ ${_greetings}
 | ------- | ----------- |
 | `ujust --choose`  | ${_choose}  |
 | `ujust toggle-user-motd` | ${_toggle} |
-| `ujust bluefin-cli` | ${_bling} |
+| `ujust aurora-cli` | ${_bling} |
 | `brew help` | ${_brew} |
 
 ${MOTD_TIP}
