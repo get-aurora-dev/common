@@ -12,7 +12,7 @@ ${_greetings}
 
 ${MOTD_TIP}
 
-- **󰊤** [${_issues}](https://issues.projectbluefin.io)
-- **󰈙** [${_docs}](https://docs.projectbluefin.io)
+- **󰊤** [${_issues}](https://github.com/ublue-os/aurora/issues)
+- **󰈙** [${_docs}](https://docs.getaurora.dev)
 - **󰊌** [${_discussions}](https://github.com/ublue-os/aurora/discussions)
 - **󰙯** [Discord](https://discord.getaurora.dev)
