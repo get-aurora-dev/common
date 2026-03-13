@@ -83,24 +83,6 @@ toggle-devmode:
     fi
     echo "Use ujust dx-group to add your user to the correct groups and complete the installation after rebooting into the development image"
 
-# Ptyxis terminal transparency
-[group('System')]
-ptyxis-transparency opacity="0.95":
-    #!/usr/bin/env bash
-    set -euxo pipefail
-    if [[ -n "$(echo "{{ opacity }}" | grep -v '^[.0-9]*$')" ]]; then
-        printf "Value must be numeric: %s.\n" "{{ opacity }}"
-    elif [[ $(echo "0<{{ opacity }} && 1>={{ opacity }}" | bc -q) -eq 1 ]]; then
-        raw="$(gsettings get org.gnome.Ptyxis profile-uuids)"
-        uuids="$(sed -En 's|[^0-9a-z]*||g; s|([0-9a-z]{32})|\1\n|gp' <<<${raw})"
-        for i in ${uuids}; do
-            location="org.gnome.Ptyxis.Profile:/org/gnome/Ptyxis/Profiles/${i}/"
-            gsettings set "${location}" opacity "{{ opacity }}"; done
-        printf "Ptyxis opacity is now %s.\n" "{{ opacity }}"
-    else
-        printf "Value must be greater than 0 and less than or equal to 1: %s.\n" "{{ opacity }}"
-    fi
-
 # Configure docker,incus-admin,libvirt, container manager, serial permissions
 [group('System')]
 dx-group:
