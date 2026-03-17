@@ -316,7 +316,7 @@ toggle-iwd:
 [group('Apps')]
 setup-sunshine ACTION="":
     #!/usr/bin/bash
-    SERVICE_STATE="$(systemctl is-enabled --user sunshine.service)"
+    SERVICE_STATE="$(systemctl is-enabled --user app-dev.lizardbyte.app.Sunshine.service)"
     OPTION={{ ACTION }}
     if [ "$SERVICE_STATE" == "enabled" ]; then
         SERVICE_STATE="Enabled"
@@ -336,9 +336,9 @@ setup-sunshine ACTION="":
       OPTION=$(gum choose "Enable" "Disable" "Open Portal" "Exit")
     fi
     if [[ "${OPTION,,}" =~ ^enable ]]; then
-      systemctl enable --user --now sunshine.service
+      systemctl enable --user --now app-dev.lizardbyte.app.Sunshine.service
     elif [[ "${OPTION,,}" =~ ^(remove|uninstall|disable) ]]; then
-      systemctl disable --user --now sunshine.service
+      systemctl disable --user --now app-dev.lizardbyte.app.Sunshine.service
     elif [[ "${OPTION,,}" =~ ^(portal|open) ]]; then
       echo "Opening Sunshine management portal..."
       xdg-open https://localhost:47990
