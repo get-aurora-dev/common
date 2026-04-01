@@ -1,0 +1,14 @@
+[Unit]
+Description=Sync NVIDIA system drivers with Flatpak runtime
+After=network-online.target flatpak-system-helper.service
+Wants=network-online.target
+ConditionPathExists=/proc/driver/nvidia/version
+
+[Service]
+Type=oneshot
+ExecCondition=/usr/libexec/ublue-nvidia-flatpak-runtime-sync check
+ExecStart=/usr/libexec/ublue-nvidia-flatpak-runtime-sync sync
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
