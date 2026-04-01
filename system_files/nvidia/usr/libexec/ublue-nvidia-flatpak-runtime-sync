@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-SYSTEM_NVIDIA_VERSION=$(cat /proc/driver/nvidia/version | grep -oP 'Kernel Module\s+\K[0-9]+\.[0-9]+\.[0-9]+')
+SYSTEM_NVIDIA_VERSION=$(head -1 /proc/driver/nvidia/version | grep -oP '\d+\.\d+\.\d+')
 FLATPAK_NVIDIA_VERSION=$(echo "${SYSTEM_NVIDIA_VERSION}" | tr '.' '-')
 
 case "${1}" in
