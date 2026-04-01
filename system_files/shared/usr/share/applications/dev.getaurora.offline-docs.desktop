@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Name=Aurora Offline Docs
+Name[fr]=Guide d'Utilisation
+Comment=Open the Aurora User Guide (PDF)
+Comment[fr]=Ouvre le guide d'utilisation d'Aurora (PDF en anglais)
+Exec=/usr/bin/xdg-open /usr/share/doc/aurora/aurora.pdf
+Icon=distributor-logo
+Terminal=false
+Categories=Documentation;System;
+Keywords=aurora;docs;manual;guide;pdf;help;tutorial;
+StartupNotify=true
+NoDisplay=false
+OnlyShowIn=KDE;
+X-KDE-Shortcuts=Meta+F1

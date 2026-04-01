@@ -13,3 +13,6 @@ font=Noto Sans,10,-1,5,50,0,0,0,0,0
 menuFont=Noto Sans,10,-1,5,50,0,0,0,0,0
 smallestReadableFont=Noto Sans,8,-1,5,50,0,0,0,0,0
 toolBarFont=Noto Sans,9,-1,5,50,0,0,0,0,0
+
+[KDE Control Module Restrictions][$i]
+kcm_updates=false

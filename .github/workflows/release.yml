@@ -3,7 +3,7 @@ name: Monthly Release
 on:
   schedule:
     # Run on the 1st of every month at 00:00 UTC
-    - cron: '0 0 1 * *'
+    - cron: '0 1 1 * *'
   workflow_dispatch:
 
 permissions:

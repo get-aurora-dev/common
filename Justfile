@@ -1,8 +1,12 @@
 just := just_executable()
 
+# Not a buildsystem, only convenience commands
+
 # Build the aurora-common container locally
 build:
-    buildah build -t localhost/aurora-common:latest -f ./Containerfile .
+    git submodule update --init --recursive
+    git submodule update --remote
+    podman build -t localhost/aurora-common:latest -f ./Containerfile .
 
 # Check the syntax of all Justfiles in the repository
 check:
@@ -34,3 +38,13 @@ tree IMAGE="localhost/aurora-common:latest":
     podman run --rm tree-temp
     rm TreeContainerfile
     podman rmi tree-temp
+
+dump IMAGE="localhost/aurora-common:latest":
+    #!/usr/bin/bash
+    set -euo pipefail
+
+    cid=$(podman create {{ IMAGE }})
+    echo "Created container $cid from {{ IMAGE }}"
+    mkdir -p dump
+    podman cp "$cid:/." dump/
+    podman rm "$cid"

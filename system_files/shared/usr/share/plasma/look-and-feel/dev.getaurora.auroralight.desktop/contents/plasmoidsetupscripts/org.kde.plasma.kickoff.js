@@ -1,0 +1,1 @@
+../../../dev.getaurora.aurora.desktop/contents/plasmoidsetupscripts/org.kde.plasma.kickoff.js

@@ -1,0 +1,3 @@
+[submodule "branding"]
+	path = branding
+	url = https://github.com/get-aurora-dev/branding.git

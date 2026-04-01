@@ -54,7 +54,7 @@ EOF
 
 echo -e "\nInitializing Incus"
 echo "Choose your Incus installation type:"
-OPTION=$(Choose Minimal Custom Cancel)
+OPTION=$(gum choose "Minimal" "Custom" "Cancel")
 if [[ "${OPTION,,}" =~ ^minimal ]]; then
     pkexec incus admin init --minimal
     echo -e "\nAdding the incus bridge to the trusted firewall zone"
@@ -76,4 +76,4 @@ if [[ "${OPTION,,}" =~ ^cancel ]]; then
     echo "You have chosen to cancel the Incus installation process"
     exit 0
 fi
-echo -e "\nIncus has been ${green}${b}installed${n}. You can now run 'incus' to manage your containers."
+echo -e "\nIncus has been $installed. You can now run 'incus' to manage your containers."

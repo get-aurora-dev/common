@@ -1,56 +1,55 @@
-# WIP - aurora-common
+# aurora-common
 
-Shared OCI layer containing common configuration files used across all Bluefin variants (bluefin, bluefin-dx, bluefin-lts).
+Shared OCI layer containing configuration files for Aurora and Aurora-DX variants.
 
-## What's Inside
+## Repository Structure
 
-This layer contains two main configuration directories:
+This layer builds on top of `ghcr.io/projectbluefin/common` and `https://github.com/get-aurora-dev/branding` which includes:
 
-### `/etc/ublue-os/` - System Configuration
-- Bling - CLI theming settings
-- Fastfetch settings - System information display configuration
-- Setup configuration - First-boot and system setup parameters
+- `system_files/shared/` - Configuration shared between Aurora and Aurora-DX
+- `system_files/dx/` - Aurora-DX specific configuration
+- `wallpapers/` - Aurora wallpapers from [artwork repo](https://github.com/ublue-os/artwork)
+- `system_files/shared/usr/share/ublue-os/homebrew/` - Flatpak definitions used for including flatpaks for the ISOs and `ujust install-system-flatpaks` - [Yes, homebrew supports the installation of Flatpaks](https://github.com/Homebrew/brew/pull/21097)
+- `logos/` - Aurora Logos used in SDDM/Plasma Kickoff etc.
 
-### `/usr/share/ublue-os/` - User-Space Configuration
-- Firefox defaults - Pre-configured Firefox settings
-- Flatpak overrides - Application-specific Flatpak configurations
-- Just recipes - Additional command recipes for system management
-- MOTD templates - Message of the day and tips
-- Setup hooks - Scripts for privileged, system, and user setup stages
+## Usage in Downstream Projects
 
-## Usage in Containerfile
-
-Reference this layer as a build stage and copy the directories you need:
-
-### Copy everything:
-```dockerfile
-FROM ghcr.io/ublue-os/bluefin-common:latest AS bluefin-common
-
-# Copy all system files
-COPY --from=bluefin-common /system_files /
-```
-
-### Copy only system configuration:
-
-This is what Aurora should use, gives shares the common set of files and keeps the images opinions seperate.
+Aurora images reference this layer in their Containerfiles:
 
 ```dockerfile
-FROM ghcr.io/ublue-os/bluefin-common:latest AS bluefin-common
+FROM ghcr.io/get-aurora-dev/aurora-common:latest AS aurora-common
 
-# Copy only /etc configuration
-COPY --from=bluefin-common /system_files/etc /etc
-```
+# Copy shared configuration
+COPY --from=aurora-common /system_files/shared /
 
-### Copy only the image opinion:
-```dockerfile
-FROM ghcr.io/ublue-os/bluefin-common:latest AS bluefin-common
+# Copy DX-specific configuration (Aurora-DX only)
+COPY --from=aurora-common /system_files/dx /
 
-# Copy only /usr/share configuration
-COPY --from=bluefin-common /system_files/usr /usr
+# Copy wallpapers
+COPY --from=aurora-common /wallpapers /
+
+# Copy other assets as needed
+COPY --from=aurora-common /logos /tmp/logos
 ```
 
 ## Building Locally
 
 ```bash
 just build
+```
+
+## Additional Commands
+
+```bash
+# Check Just syntax
+just check
+
+# Fix Just formatting
+just fix
+
+# Inspect image structure
+just tree
+
+# Dump image contents to ./dump
+just dump
 ```

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Hidden=true
+Name=Boot to Windows
+Name[fr]=Redémarrer sous Windows
+Comment=Boot to Windows installation
+Comment[fr]=Redémarre le système sous Windows
+Type=Application
+Terminal=false
+Icon=folder-windows-symbolic
+Exec=sh -c "pkexec /usr/bin/boot-to-windows"
+Categories=Utility;
