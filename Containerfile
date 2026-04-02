@@ -68,13 +68,25 @@ RUN set -xeuo pipefail && \
   curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/busywidget.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/busywidget.svgz && \
   curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/kde.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/kde.svgz && \
   curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/plasma.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/plasma.svgz && \
+  mkdir -p /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/splash/images && \
+  cp -r /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/ && \
   mkdir -p /out/logos/usr/share/sddm/themes/01-breeze-aurora/ && \
   ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo.svg /out/logos/usr/share/sddm/themes/01-breeze-aurora/default-logo.svg
+
+COPY /system_files/shared /out/system_files/shared
+
+# Copy default dark variant things to light variant so that it is shared
+# Effectively are symlinks but we can't do that here because themes can't execute files of other themes
+RUN set -xeuo pipefail && \
+  cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/plasmoidsetupscripts/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents && \
+  cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents && \
+  cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/layouts /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
 
 FROM scratch AS ctx
 COPY --from=ghcr.io/projectbluefin/common:latest /system_files/shared /system_files/shared
 COPY --from=ghcr.io/projectbluefin/common:latest /system_files/nvidia /system_files/nvidia
 COPY --from=builder /out/wallpapers /wallpapers
 COPY --from=builder /out/logos /logos
+COPY --from=builder /out/system_files/shared /system_files/shared
 COPY /branding/system_files /system_files/shared
 COPY /system_files /system_files

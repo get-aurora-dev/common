@@ -19,5 +19,6 @@
         "Website": "https://getaurora.dev"
     },
     "X-KDE-ParentApp": "",
+    "X-Plasma-RootContainmentLayout": "org.kde.plasma.desktop-layout.js",
     "X-Plasma-MainScript": "defaults"
 }
