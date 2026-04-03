@@ -73,6 +73,7 @@ RUN set -xeuo pipefail && \
 
 FROM scratch AS ctx
 COPY --from=ghcr.io/projectbluefin/common:latest /system_files/shared /system_files/shared
+COPY --from=ghcr.io/projectbluefin/common:latest /system_files/nvidia /system_files/nvidia
 COPY --from=builder /out/wallpapers /wallpapers
 COPY --from=builder /out/logos /logos
 COPY /branding/system_files /system_files/shared
