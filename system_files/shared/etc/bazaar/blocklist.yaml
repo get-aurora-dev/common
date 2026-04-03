@@ -1,7 +1,6 @@
 # For the rationale about what is included in this list, see https://github.com/ublue-os/aurora/issues/786
 blocklists:
   - block:
-    - app.devsuite.Ptyxis
     - com.google.AndroidStudio
     - com.helix_editor.Helix
     - com.jetbrains.CLion
