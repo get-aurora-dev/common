@@ -1,8 +1,8 @@
-FROM docker.io/library/alpine:latest AS builder
+FROM docker.io/library/alpine:latest@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659 AS builder
 
 RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert
 
-COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest / /wallpapers
+COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest@sha256:003fa3bb9634c56f7dc7d1a318ea9436b3116f08c8782e0025ed616d496c364f / /wallpapers
 
 COPY /logos /logos
 
@@ -83,8 +83,8 @@ RUN set -xeuo pipefail && \
   cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/layouts /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
 
 FROM scratch AS ctx
-COPY --from=ghcr.io/projectbluefin/common:latest /system_files/shared /system_files/shared
-COPY --from=ghcr.io/projectbluefin/common:latest /system_files/nvidia /system_files/nvidia
+COPY --from=ghcr.io/projectbluefin/common:latest@sha256:37e530ff00af2d8f79192b93ab11d89234786166f177fcffde158822b45e3a1a /system_files/shared /system_files/shared
+COPY --from=ghcr.io/projectbluefin/common:latest@sha256:37e530ff00af2d8f79192b93ab11d89234786166f177fcffde158822b45e3a1a /system_files/nvidia /system_files/nvidia
 COPY --from=builder /out/wallpapers /wallpapers
 COPY --from=builder /out/logos /logos
 COPY --from=builder /out/system_files/shared /system_files/shared
