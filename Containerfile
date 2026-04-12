@@ -6,18 +6,22 @@ COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest / /wallpapers
 
 COPY /logos /logos
 
-RUN set -xeuo pipefail && \
-    cd /wallpapers && \
-    rm -rf kde/*/gnome-background-properties/ && \
-    mkdir -p /out/wallpapers/usr/share/wallpapers /out/wallpapers/usr/share/backgrounds && \
-    mv kde/ /out/wallpapers/usr/share/backgrounds/aurora/ && \
-    cd /out/wallpapers/usr/share/backgrounds && \
-    for dir in aurora/*; do \
-      ln -sr "/out/wallpapers/usr/share/backgrounds/${dir}" /out/wallpapers/usr/share/wallpapers/; \
-    done && \
-    ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-6/ /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-1 && \
-    ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-1/ /out/wallpapers/usr/share/wallpapers/ && \
-    rm -rf /wallpapers
+RUN <<EOF
+set -xeuo pipefail
+cd /wallpapers
+rm -rf kde/*/gnome-background-properties/
+mkdir -p /out/wallpapers/usr/share/wallpapers /out/wallpapers/usr/share/backgrounds
+mv kde/ /out/wallpapers/usr/share/backgrounds/aurora/
+cd /out/wallpapers/usr/share/backgrounds
+
+for dir in aurora/*; do
+  ln -sr "/out/wallpapers/usr/share/backgrounds/${dir}" /out/wallpapers/usr/share/wallpapers/
+done
+
+ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-6/ /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-1
+ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-1/ /out/wallpapers/usr/share/wallpapers/
+rm -rf /wallpapers
+EOF
 
 # Here we set our default wallpaper
 RUN set -xeuo pipefail && \
