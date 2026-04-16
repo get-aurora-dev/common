@@ -32,6 +32,10 @@ COPY --from=aurora-common /wallpapers /
 COPY --from=aurora-common /logos /tmp/logos
 ```
 
+Based on the work of the [Fedora KDE-SIG](https://forge.fedoraproject.org/kde)
+
+- [kde-settings](https://forge.fedoraproject.org/kde/kde-settings)
+
 ## Building Locally
 
 ```bash
