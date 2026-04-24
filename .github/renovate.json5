@@ -9,6 +9,13 @@
       "automerge": true,
       "automergeType": "pr",
       "automergeStrategy": "squash"
+    },
+    {
+      "automerge": true,
+      "matchUpdateTypes": ["digest"],
+      "matchDepNames": [
+        "ghcr.io/projectbluefin/common"
+      ]
     }
   ]
 }
