@@ -1,31 +1,41 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
   ],
-  "customManagers": [
+  customManagers: [
     {
-      "customType": "regex",
-      "fileMatch": ["^image-versions\\.yml$"],
-      "matchStrings": [
-        "image:\\s+(?<depName>[^\\s]+)\\s+tag:\\s+(?<currentValue>[^\\s]+)\\s+digest:\\s+(?<currentDigest>sha256:[a-f0-9]+)"
+      customType: 'regex',
+      managerFilePatterns: [
+        '/^image-versions\\.yml$/',
       ],
-      "datasourceTemplate": "docker"
-    }
+      matchStrings: [
+        'image:\\s+(?<depName>[^\\s]+)\\s+tag:\\s+(?<currentValue>[^\\s]+)\\s+digest:\\s+(?<currentDigest>sha256:[a-f0-9]+)',
+      ],
+      datasourceTemplate: 'docker',
+    },
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "matchUpdateTypes": ["minor", "pin", "digest", "pinDigest", "patch"],
-      "automerge": true,
-      "automergeType": "pr",
-      "automergeStrategy": "squash"
+      matchUpdateTypes: [
+        'minor',
+        'pin',
+        'digest',
+        'pinDigest',
+        'patch',
+      ],
+      automerge: true,
+      automergeType: 'pr',
+      automergeStrategy: 'squash',
     },
     {
-      "automerge": true,
-      "matchUpdateTypes": ["digest"],
-      "matchDepNames": [
-        "ghcr.io/projectbluefin/common"
-      ]
-    }
-  ]
+      automerge: true,
+      matchUpdateTypes: [
+        'digest',
+      ],
+      matchDepNames: [
+        'ghcr.io/projectbluefin/common',
+      ],
+    },
+  ],
 }
