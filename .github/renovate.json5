@@ -3,6 +3,16 @@
   "extends": [
     "config:recommended"
   ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["^image-versions\\.yml$"],
+      "matchStrings": [
+        "image:\\s+(?<depName>[^\\s]+)\\s+tag:\\s+(?<currentValue>[^\\s]+)\\s+digest:\\s+(?<currentDigest>sha256:[a-f0-9]+)"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "pin", "digest", "pinDigest", "patch"],
