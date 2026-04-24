@@ -30,11 +30,8 @@
     },
     {
       automerge: true,
-      matchUpdateTypes: [
-        'digest',
-      ],
       matchDepNames: [
-        'ghcr.io/projectbluefin/common',
+        'ghcr.io/ublue-os/aurora-wallpapers',
       ],
     },
   ],
