@@ -1,0 +1,13 @@
+{
+  "welcome": "Bienvenue sur Aurora",
+  "greetings": "Salut, admirateur des étoiles.",
+  "cmd": "Commande",
+  "desc": "Description",
+  "choose": "Affiche les commandes disponibles",
+  "toggle": "Active/Désactive cette bannière",
+  "bling": "Active le bling du terminal",
+  "brew": "Gère les paquets de la ligne de commande",
+  "issues": "Signaler un problème",
+  "docs": "Documentation ",
+  "discussions": "Discussions"
+}
