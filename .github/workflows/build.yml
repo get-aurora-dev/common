@@ -55,6 +55,9 @@ jobs:
             ${{ steps.generate-tags.outputs.date }}
             ${{ steps.generate-tags.outputs.sha_short }}
           oci: true
+          extra-args: |
+            --rewrite-timestamp
+            --source-date-epoch=1321009871
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
