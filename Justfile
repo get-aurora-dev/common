@@ -8,7 +8,7 @@ build:
     git submodule update --remote
     podman build \
       --rewrite-timestamp \
-      --source-date-epoch=1321009871 \
+      --source-date-epoch=$(git log -1 --pretty=%ct) \
       -t localhost/aurora-common:latest -f ./Containerfile .
 
 # Check the syntax of all Justfiles in the repository
