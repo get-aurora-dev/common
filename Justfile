@@ -6,7 +6,10 @@ just := just_executable()
 build:
     git submodule update --init --recursive
     git submodule update --remote
-    podman build -t localhost/aurora-common:latest -f ./Containerfile .
+    podman build \
+      --rewrite-timestamp \
+      --source-date-epoch=1321009871 \
+      -t localhost/aurora-common:latest -f ./Containerfile .
 
 # Check the syntax of all Justfiles in the repository
 check:
