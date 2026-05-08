@@ -15,7 +15,7 @@ for (let i = 0; i < allPanels.length; ++i) {
             widget.writeConfig("launchers", [
                 "preferred://browser",
                 "applications:io.github.kolunmi.Bazaar.desktop",
-                "applications:org.gnome.Ptyxis.desktop",
+                "applications:org.kde.konsole.desktop",
                 "preferred://filemanager"
             ]);
             widget.reloadConfig();
