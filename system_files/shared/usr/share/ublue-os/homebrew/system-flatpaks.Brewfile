@@ -1,6 +1,6 @@
 # Default system-wide flatpaks for Aurora
 flatpak "com.github.tchx84.Flatseal"
-flatpak "com.ranfdev.DistroShelf"
+flatpak "io.github.DenysMb.Kontainer"
 flatpak "io.github.flattool.Warehouse"
 flatpak "io.github.kolunmi.Bazaar"
 flatpak "io.missioncenter.MissionCenter"

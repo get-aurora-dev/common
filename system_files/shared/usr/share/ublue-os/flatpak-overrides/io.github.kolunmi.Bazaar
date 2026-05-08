@@ -1,2 +1,5 @@
 [Context]
 filesystems=host-etc
+
+[Environment]
+BAZAAR_DESKTOP_SEARCH_PROVIDER_ICON_SIZE=256

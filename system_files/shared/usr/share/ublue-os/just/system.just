@@ -32,6 +32,7 @@ benchmark:
 
 # Configure Aurora-CLI Terminal Experience with Brew
 [group('System')]
+[no-exit-message]
 aurora-cli:
     @ublue-bling
     brew bundle --file=/usr/share/ublue-os/homebrew/cli.Brewfile

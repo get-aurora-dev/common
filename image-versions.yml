@@ -1,5 +1,5 @@
 images:
-  - name: common
-    image: ghcr.io/projectbluefin/common
+  - name: aurora-wallpapers
+    image: ghcr.io/ublue-os/aurora-wallpapers
     tag: latest
-    digest: sha256:ba958ac01e28aa79439e500f5df9063876549f0a4e65532d1e6927bee6f2484a
+    digest: sha256:270b3b10cd6fd54e322407275e24b86655c2472738186b1a825786ce26d4ce50

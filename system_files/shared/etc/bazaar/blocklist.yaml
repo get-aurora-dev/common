@@ -34,3 +34,4 @@ blocklists:
     - org.kde.kwalletmanager
     - org.kde.kwalletmanager5
     - org.vim.Vim
+    - dev.zed.Zed

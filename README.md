@@ -12,6 +12,10 @@ This layer builds on top of `ghcr.io/projectbluefin/common` and `https://github.
 - `system_files/shared/usr/share/ublue-os/homebrew/` - Flatpak definitions used for including flatpaks for the ISOs and `ujust install-system-flatpaks` - [Yes, homebrew supports the installation of Flatpaks](https://github.com/Homebrew/brew/pull/21097)
 - `logos/` - Aurora Logos used in SDDM/Plasma Kickoff etc.
 
+Related work is on the [Fedora KDE-SIG](https://forge.fedoraproject.org/kde)
+
+- [kde-settings](https://forge.fedoraproject.org/kde/kde-settings)
+
 ## Usage in Downstream Projects
 
 Aurora images reference this layer in their Containerfiles:
@@ -30,6 +34,17 @@ COPY --from=aurora-common /wallpapers /
 
 # Copy other assets as needed
 COPY --from=aurora-common /logos /tmp/logos
+```
+
+## Verify authenticity with cosign
+
+`cosign.pub` has been used in the past to sign artifacts, we are using keyless OIDC signing now.
+
+```
+cosign verify \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity-regexp="github.com/get-aurora-dev/common/.github/workflows/*" \
+  ghcr.io/get-aurora-dev/common:latest
 ```
 
 ## Building Locally

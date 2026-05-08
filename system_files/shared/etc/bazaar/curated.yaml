@@ -156,7 +156,7 @@ rows:
           banner-text-valign: center
           banner-height: 550
           appids:
-            - io.github.DenysMb.Kontainer
+            - io.github.vani_tty1.memerist
             - com.pixelomer.ShijimaQt
             - org.kde.kstars
             - re.sonny.Eloquent
