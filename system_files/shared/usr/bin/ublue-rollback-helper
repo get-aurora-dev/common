@@ -24,8 +24,8 @@ IMAGE_NAME="$(gum choose --header="Select your image:" "${IMAGES[@]}" cancel)"
 
 base_image="${IMAGE_REGISTRY}/${IMAGE_NAME}"
 declare -a CHANNELS
-CHANNELS=(stable stable-daily latest)
-  echo "The default selection is stable (weekly builds). stable-daily (daily builds) are for enthusiasts, and latest is for testers"
+CHANNELS=(stable latest)
+  echo "The default selection is stable (weekly builds) and latest is for enthusiasts and testers."
 
 channel_choice="$(gum choose "${CHANNELS[@]}" cancel)"
 [[ "$channel_choice" == "cancel" || "$channel_choice" == "" ]] && exit 0
