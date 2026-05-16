@@ -69,10 +69,7 @@ RUN set -xeuo pipefail && \
   curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/kde.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/kde.svgz && \
   curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/plasma.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/plasma.svgz && \
   mkdir -p /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/splash/images && \
-  cp -r /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/ && \
-  mkdir -p /out/logos/usr/share/sddm/themes/01-breeze-aurora/ && \
-  ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo.svg /out/logos/usr/share/sddm/themes/01-breeze-aurora/default-logo.svg
-
+  cp -r /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/
 COPY /system_files/shared /out/system_files/shared
 
 # Copy default dark variant things to light variant so that it is shared
