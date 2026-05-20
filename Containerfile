@@ -1,8 +1,8 @@
-FROM docker.io/library/alpine:latest AS builder
+FROM docker.io/library/alpine:latest@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11 AS builder
 
 RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert
 
-COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest / /wallpapers
+COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest@sha256:270b3b10cd6fd54e322407275e24b86655c2472738186b1a825786ce26d4ce50 / /wallpapers
 
 COPY /logos /logos
 
