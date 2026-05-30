@@ -69,10 +69,7 @@ RUN set -xeuo pipefail && \
   curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/kde.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/kde.svgz && \
   curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/plasma.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/plasma.svgz && \
   mkdir -p /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/splash/images && \
-  cp -r /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/ && \
-  mkdir -p /out/logos/usr/share/sddm/themes/01-breeze-aurora/ && \
-  ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo.svg /out/logos/usr/share/sddm/themes/01-breeze-aurora/default-logo.svg
-
+  cp -r /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/
 COPY /system_files/shared /out/system_files/shared
 
 # Copy default dark variant things to light variant so that it is shared
@@ -82,7 +79,7 @@ RUN set -xeuo pipefail && \
   cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents && \
   cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/layouts /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
 
-FROM ghcr.io/projectbluefin/common@sha256:c1fcbdf3ccf0aaba71f8aaf2b2a5bd0bc507e6d33c8433bdf29584cd705a41cb AS bluefin
+FROM ghcr.io/projectbluefin/common@sha256:fbcef9b1636bc67c2cb58327527f01c9798280229ad5a91c2f8dac0a5d3b6f3c AS bluefin
 
 FROM scratch AS ctx
 COPY --from=bluefin /system_files/shared /system_files/shared
