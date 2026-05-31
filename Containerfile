@@ -2,7 +2,7 @@ FROM docker.io/library/alpine:latest AS builder
 
 RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert
 
-COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest / /wallpapers
+COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest@sha256:270b3b10cd6fd54e322407275e24b86655c2472738186b1a825786ce26d4ce50 / /wallpapers
 
 COPY /logos /logos
 
