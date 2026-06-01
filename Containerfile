@@ -79,7 +79,7 @@ RUN set -xeuo pipefail && \
   cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents && \
   cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/layouts /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
 
-FROM ghcr.io/projectbluefin/common@sha256:eaa98035a6aa664f768e30d3a23067ab718ab67609ae495a8fe6bec018fb7d4f AS bluefin
+FROM ghcr.io/projectbluefin/common@sha256:0c0f1c7d97075431e303d8ef6b368649ff8866b05a6a6b40f439d47d1f098a4c AS bluefin
 
 FROM scratch AS ctx
 COPY --from=bluefin /system_files/shared /system_files/shared
