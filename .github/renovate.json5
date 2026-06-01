@@ -39,5 +39,11 @@
         'ghcr.io/ublue-os/aurora-wallpapers',
       ],
     },
+    {
+      matchDepNames: [
+        'docker.io/library/alpine',
+      ],
+      pinDigests: false,
+    },
   ],
 }
