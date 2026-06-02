@@ -1,10 +1,11 @@
 # aurora-common
 
-Shared OCI layer containing configuration files for Aurora and Aurora-DX variants.
+Shared OCI layer containing configuration files for https://github.com/ublue-os/aurora.
 
-## Repository Structure
-
-This layer builds on top of `ghcr.io/projectbluefin/common` and `https://github.com/get-aurora-dev/branding` which includes:
+This repo builds on top of:
+- https://github.com/ublue-os/aurorafin-shared
+- https://github.com/get-aurora-dev/branding
+- https://github.com/ublue-os/artwork
 
 - `system_files/shared/` - Configuration shared between Aurora and Aurora-DX
 - `system_files/dx/` - Aurora-DX specific configuration

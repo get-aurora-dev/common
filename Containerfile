@@ -1,6 +1,6 @@
 FROM docker.io/library/alpine:latest AS builder
 
-RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert
+RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert just
 
 COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest@sha256:270b3b10cd6fd54e322407275e24b86655c2472738186b1a825786ce26d4ce50 / /wallpapers
 
@@ -79,11 +79,21 @@ RUN set -xeuo pipefail && \
   cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents && \
   cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/layouts /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
 
-FROM ghcr.io/projectbluefin/common@sha256:0c0f1c7d97075431e303d8ef6b368649ff8866b05a6a6b40f439d47d1f098a4c AS bluefin
+RUN install -d /out/system_files/shared/usr/share/bash-completion/completions /out/system_files/shared/usr/share/zsh/site-functions /out/system_files/shared/usr/share/fish/vendor_completions.d/ && \
+  just --completions bash | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/bash-completion/completions/ujust && \
+  just --completions zsh | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/zsh/site-functions/_ujust && \
+  just --completions fish | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/fish/vendor_completions.d/ujust.fish
+
+# FIXME: Renovate
+RUN curl -fsSLo - https://codeberg.org/fabiscafe/game-devices-udev/archive/1.0.tar.gz | tar xzvf - -C tmp/ && \
+    for f in tmp/game-devices-udev/src/*.rules; do \
+      install -Dpm0644 "$f" "out/system_files/shared/usr/lib/udev/rules.d/71-${f##*/}"; \
+    done && \
+  curl -fsSLo /out/system_files/shared/usr/lib/udev/rules.d/70-u2f.rules https://raw.githubusercontent.com/Yubico/libfido2/refs/heads/main/udev/70-u2f.rules
 
 FROM scratch AS ctx
-COPY --from=bluefin /system_files/shared /system_files/shared
-COPY --from=bluefin /system_files/nvidia /system_files/nvidia
+COPY aurorafin-shared/system_files/shared /system_files/shared
+COPY aurorafin-shared/system_files/nvidia /system_files/nvidia
 COPY --from=builder /out/wallpapers /wallpapers
 COPY --from=builder /out/logos /logos
 COPY --from=builder /out/system_files/shared /system_files/shared
