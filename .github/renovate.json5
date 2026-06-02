@@ -3,6 +3,11 @@
   extends: [
     'config:recommended',
   ],
+
+  "git-submodules": {
+    "enabled": true
+  },
+
   customManagers: [
     {
       customType: 'regex',
@@ -33,6 +38,12 @@
       matchDepNames: [
         'ghcr.io/ublue-os/aurora-wallpapers',
       ],
+    },
+    {
+      matchDepNames: [
+        'docker.io/library/alpine',
+      ],
+      pinDigests: false,
     },
   ],
 }

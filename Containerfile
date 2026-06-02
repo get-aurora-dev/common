@@ -1,8 +1,8 @@
 FROM docker.io/library/alpine:latest AS builder
 
-RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert
+RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert just
 
-COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest / /wallpapers
+COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest@sha256:270b3b10cd6fd54e322407275e24b86655c2472738186b1a825786ce26d4ce50 / /wallpapers
 
 COPY /logos /logos
 
@@ -69,10 +69,7 @@ RUN set -xeuo pipefail && \
   curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/kde.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/kde.svgz && \
   curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/plasma.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/plasma.svgz && \
   mkdir -p /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/splash/images && \
-  cp -r /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/ && \
-  mkdir -p /out/logos/usr/share/sddm/themes/01-breeze-aurora/ && \
-  ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo.svg /out/logos/usr/share/sddm/themes/01-breeze-aurora/default-logo.svg
-
+  cp -r /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/
 COPY /system_files/shared /out/system_files/shared
 
 # Copy default dark variant things to light variant so that it is shared
@@ -82,11 +79,21 @@ RUN set -xeuo pipefail && \
   cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents && \
   cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/layouts /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
 
-FROM ghcr.io/projectbluefin/common@sha256:0538fbe3da628dbef2b5b60bc4fd9b3f0a40cd4687130aab31d223666b7381f2 AS bluefin
+RUN install -d /out/system_files/shared/usr/share/bash-completion/completions /out/system_files/shared/usr/share/zsh/site-functions /out/system_files/shared/usr/share/fish/vendor_completions.d/ && \
+  just --completions bash | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/bash-completion/completions/ujust && \
+  just --completions zsh | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/zsh/site-functions/_ujust && \
+  just --completions fish | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/fish/vendor_completions.d/ujust.fish
+
+# FIXME: Renovate
+RUN curl -fsSLo - https://codeberg.org/fabiscafe/game-devices-udev/archive/1.0.tar.gz | tar xzvf - -C tmp/ && \
+    for f in tmp/game-devices-udev/src/*.rules; do \
+      install -Dpm0644 "$f" "out/system_files/shared/usr/lib/udev/rules.d/71-${f##*/}"; \
+    done && \
+  curl -fsSLo /out/system_files/shared/usr/lib/udev/rules.d/70-u2f.rules https://raw.githubusercontent.com/Yubico/libfido2/refs/heads/main/udev/70-u2f.rules
 
 FROM scratch AS ctx
-COPY --from=bluefin /system_files/shared /system_files/shared
-COPY --from=bluefin /system_files/nvidia /system_files/nvidia
+COPY aurorafin-shared/system_files/shared /system_files/shared
+COPY aurorafin-shared/system_files/nvidia /system_files/nvidia
 COPY --from=builder /out/wallpapers /wallpapers
 COPY --from=builder /out/logos /logos
 COPY --from=builder /out/system_files/shared /system_files/shared

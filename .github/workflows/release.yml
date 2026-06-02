@@ -39,7 +39,7 @@ jobs:
           notes<<NOTES_EOF
           Monthly snapshot release ${TAG}
 
-          This is an automated monthly snapshot of bluefin-common configuration files.
+          This is an automated monthly snapshot of aurora-common configuration files.
           NOTES_EOF
           EOF
           else
@@ -53,7 +53,7 @@ jobs:
           $(git log "${PREVIOUS_TAG}..HEAD" --pretty=format:'- %s (%h)' --no-merges)
 
           ---
-          *This is an automated monthly snapshot of bluefin-common configuration files.*
+          *This is an automated monthly snapshot of aurora-common configuration files.*
           NOTES_EOF
           EOF
           fi

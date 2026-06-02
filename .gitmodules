@@ -1,3 +1,6 @@
 [submodule "branding"]
 	path = branding
 	url = https://github.com/get-aurora-dev/branding.git
+[submodule "aurorafin-shared"]
+	path = aurorafin-shared
+	url = https://github.com/ublue-os/aurorafin-shared.git
