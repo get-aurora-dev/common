@@ -157,7 +157,7 @@ rows:
           banner-height: 550
           appids:
             - io.github.vani_tty1.memerist
-            - com.pixelomer.ShijimaQt
+            - org.kde.drawy
             - org.kde.kstars
             - re.sonny.Eloquent
             - io.github.halfmexican.Mingle
