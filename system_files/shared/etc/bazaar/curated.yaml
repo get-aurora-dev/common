@@ -1,411 +1,219 @@
-# https://github.com/kolunmi/bazaar/blob/main/docs/overview.md
-
-css: |
-  .global-section banner {
-     margin-top: 30px;
-     margin-left: 30px;
-     margin-right: 30px;
-     border-radius: 12px;
-  }
-
-  .global-section banner-text-overlay {
-     margin: 30px;
-     padding: 20px;
-  }
-
-  .global-section banner-text {
-     padding: 50px;
-     text-shadow: 1px 1px 4px rgba(0, 0, 5, 1);
-  }
-
-  .global-section title {
-    text-shadow: 2px 2px 4px rgba(0, 0, 5, 1);
-  }
-
-  .global-section subtitle {
-    font-weight: 400;
-    text-shadow: 2px 2px 4px rgba(0, 0, 5, 1);
-  }
-
-  .global-section app-tile > button {
-    background-color: alpha(white, 0.1);
-  }
-
-  .global-section {
-    margin: 15px;
-    border-radius: 12px;
-    color: #ffffff;
-  }
-
-  .global-section app-tile-verified-check {
-    color: var(--fg-color);
-  }
-
-  .global-section app-tile-installed-indicator {
-    color: var(--fg-color);
-  }
-
-  .global-section app-tile-installed-pill {
-    background-color: @success_bg_color;
-    color: var(--fg-color);
-  }
-
-  .rec-section {
-    background: linear-gradient(0deg, #80cfe3, #54a3d8);
-  }
-
-  .rec-section-dark {
-    background: linear-gradient(0deg, #271e7f, #60a5c3);
-  }
-
-  .cc-section {
-    background: linear-gradient(0deg, #b8a0cf, #9b59b6);
-  }
-
-  .cc-section-dark {
-    background: linear-gradient(0deg, #392946, #050815);
-  }
-
-  .music-section {
-    background: linear-gradient(to bottom, #F56217, #ffab7b);
-  }
-
-  .music-section-dark {
-    background: linear-gradient(to bottom, #F56217, #912906);
-  }
-
-  .office-section {
-    background: linear-gradient(to bottom, #ff3e82, #f7caf0);
-  }
-
-  .office-section-dark {
-    background: linear-gradient(to bottom, #750051, #fa486b);
-  }
-
-  .gaming-section {
-    background: linear-gradient(0deg, #888a90, #67c29a);
-  }
-
-  .gaming-section-dark {
-    background: linear-gradient(0deg, #003a00, #444445);
-  }
-
-  .utilities-section {
-    background: linear-gradient(0deg, #888a90, #48659a);
-  }
-
-  .utilities-section-dark {
-    background: linear-gradient(to right bottom, #00389e, #1d3283, #242d6a, #262851, #24233a, #282636, #2b2a31, #2d2d2d, #3a3a3a, #474748, #555556, #646364);
-  }
-
-  .dev-section {
-    background-image: linear-gradient(to right bottom, #8b6fab, #7a77b3, #687fb6, #5985b6, #4d8bb3, #4892b4, #4698b3, #499eb1, #4da8b3, #55b2b4, #61bbb4, #6fc4b3);
-  }
-
-  .dev-section app-tile-installed-pill {
-    background-color: #cbabff;
-  }
-
-  .dev-section-dark {
-    background: linear-gradient(to right bottom, #8b6fab, #7a68a6, #6861a0, #555a9a, #405494, #315c9a, #1f649e, #006ca1, #0084ac, #089ab1, #43b0b2, #6fc4b3);
-  }
-
-  .dev-section-dark app-tile-installed-pill {
-    background-color: #084152;
-  }
-
-  .kde-section title,
-  .kde-section subtitle,
-  .kde-section-dark title,
-  .kde-section-dark subtitle {
-    color: #004c4c;
-    text-shadow: 1px 1px 4px #ffffff;
-  }
-
-  .kde-section {
-    background: #27b5fc;
-  }
-
-  .kde-section-dark {
-    background: #1b89f3;
-  }
-
-  .ai-section {
-    background: linear-gradient(0deg, #cc773e, #d05a00);
-  }
-
-  .ai-section-dark {
-    background: linear-gradient(0deg, #4a1c00, #eb8000);
-  }
-
 rows:
-  - sections:
-      - expand-horizontally: true
-        classes:
-          - global-section
-        light-classes:
-          - rec-section
-        dark-classes:
-          - rec-section-dark
-        category:
-          title: "Aurora Recommends"
-          subtitle: "Our Favorite Applications"
-          banner: file:///run/host/etc/bazaar/01-aurora-bazaar.jxl
-          banner-fit: cover
-          banner-text-halign: start
-          banner-text-valign: center
-          banner-height: 550
-          appids:
-            - io.github.vani_tty1.memerist
-            - org.kde.drawy
-            - org.kde.kstars
-            - re.sonny.Eloquent
-            - io.github.halfmexican.Mingle
-            - org.kde.audiotube
-            - io.github.getnf.embellish
-            - io.github.pleromix.IceBox
-            - io.github.nozwock.Packet
-            - com.github.ADBeveridge.Raider
-            - rocks.shy.VacuumTube
-            - com.github.PintaProject.Pinta
+  - banner:
+      height: 250
+      image:
+        light-uri: https://getaurora.dev/aurora-text-logo.svg
+        dark-uri: https://getaurora.dev/aurora-trans.svg
+        fit: contain # contain, fill, cover or scale-down
+        alt: "Aurora Logo"
+        can-shrink: true
+        halign: center
+      dark-color: "#030712"
+      light-color: "#c8c8c8"
 
-  - sections:
-      - expand-horizontally: true
-        classes:
-          - global-section
-        light-classes:
-          - cc-section
-        dark-classes:
-          - cc-section-dark
-        category:
-          title: "Content Creation"
-          subtitle: "Create your first donut or make some tunes"
-          banner: file:///run/host/etc/bazaar/02-aurora-bazaar.jxl
-          banner-fit: cover
-          banner-text-halign: end
-          banner-text-valign: center
-          banner-height: 550
-          appids:
-            - org.kde.krita
-            - org.ardour.Ardour
-            - org.kde.kdenlive
-            - org.blender.Blender
-            - org.inkscape.Inkscape
-            - org.audacityteam.Audacity
-            - com.obsproject.Studio
-            - com.inochi2d.inochi-session
-            - org.gimp.GIMP
-            - org.darktable.Darktable
-            - com.feaneron.Boatswain
+  - section:
+      title: "Welcome to Bazaar"
+      subtitle:
+        string: |
+          [Contribute to this page](https://github.com/get-aurora-dev/common/blob/main/system_files/shared/etc/bazaar/curated.yaml)
 
-  - sections:
-      - expand-horizontally: true
-        classes:
-          - global-section
-        light-classes:
-          - music-section
-        dark-classes:
-          - music-section-dark
-        category:
-          title: "Music & Media"
-          subtitle: "Let me break it down for you"
-          banner: file:///run/host/etc/bazaar/03-aurora-bazaar.jxl
-          banner-fit: cover
-          banner-text-halign: start
-          banner-text-valign: center
-          banner-height: 550
-          appids:
-            - org.kde.elisa
-            - com.spotify.Client
-            - com.mastermindzh.tidal-hifi
-            - org.videolan.VLC
-            - tv.plex.PlexDesktop
-            - org.kde.kasts
-            - org.kde.arianna
-            - com.plexamp.Plexamp
-            - io.github.mhogomchungu.media-downloader
-            - com.github.wwmm.easyeffects
-            - me.timschneeberger.jdsp4linux
-            - org.jellyfin.JellyfinDesktop
+      overflow-count: 4 # Will automatically create a "Show More" button, if there are more apps than the count (except if enable-bulk-install is true)
+      list-type: rich # Directly features an install button on the card, use when a section has little apps.
+      appids:
+        list:
+          - io.github.vani_tty1.memerist
+          - re.sonny.Eloquent
+          - io.github.halfmexican.Mingle
+          - org.kde.audiotube
+          - io.github.pleromix.IceBox
+          - io.github.nozwock.Packet
+          - com.github.ADBeveridge.Raider
+          - rocks.shy.VacuumTube
+          - com.github.PintaProject.Pinta
+  - section:
+      title: "Aurora & KDE News"
 
-  - sections:
-    - expand-horizontally: true
-      classes:
-        - global-section
-      light-classes:
-        - office-section
-      dark-classes:
-      - office-section-dark
-      category:
-        title: "Office & Productivity"
-        subtitle: "Let's do some work"
-        banner: file:///run/host/etc/bazaar/04-aurora-bazaar.jxl
-        banner-fit: cover
-        banner-text-halign: end
-        banner-text-valign: center
-        banner-height: 550
-        appids:
-          - com.collaboraoffice.Office
-          - com.slack.Slack
-          - md.obsidian.Obsidian
-          - org.onlyoffice.desktopeditors
-          - org.libreoffice.LibreOffice
-          - io.github.alainm23.planify
-          - io.github.nokse22.Exhibit
-          - io.gitlab.theevilskeleton.Upscaler
-          - com.bambulab.BambuStudio
-          - com.github.IsmaelMartinez.teams_for_linux
-          - com.super_productivity.SuperProductivity
+  - articles:
+      # uri: https://usebazaar.org/curated/articles.yaml # Can be used as a feed.
+      list: # Used only if URI fails, or is not given.
+        - title: "Stargazer 6-7" # Also used as the title on the article page
+          subtitle: "Aurora Happenings in the first half of 2026"
+          image: https://i.imgur.com/VMFWNaF.png # Always in 16:9
+          uri: https://raw.githubusercontent.com/ublue-os/aurora-docs/refs/heads/main/blog/2026-06-18-plasma-6-7-aurora-june.md
+        - title: "KDE 6.7 release"
+          image: https://kde.org/stuff/clipart/logo/kde-logo-white-blue-3000x3000.png
+          uri: https://invent.kde.org/websites/blogs-kde-org/-/raw/master/content/posts/twip/2026-06-20/index.md?ref_type=heads
 
-  - sections:
-      - expand-horizontally: true
-        classes:
-          - global-section
-        light-classes:
-          - gaming-section
-        dark-classes:
-          - gaming-section-dark
-        category:
-          title: "Games"
-          subtitle: "The cake is a lie"
-          banner: file:///run/host/etc/bazaar/05-aurora-bazaar.jxl
-          banner-fit: cover
-          banner-text-halign: start
-          banner-text-valign: center
-          banner-height: 550
-          appids:
-            - com.valvesoftware.Steam
-            - com.valvesoftware.SteamLink
-            - com.heroicgameslauncher.hgl
-            - io.github.Faugus.faugus-launcher
-            - net.lutris.Lutris
-            - org.vinegarhq.Sober
-            - com.dec05eba.gpu_screen_recorder
-            - com.github.Matoking.protontricks
-            - org.prismlauncher.PrismLauncher
-            - com.discordapp.Discord
-            - com.parsecgaming.parsec
-            - net.davidotek.pupgui2
-            - org.endlessaccess.threadbare
-            - net.supertuxkart.SuperTuxKart
-            - com.github.k4zmu2a.spacecadetpinball
-            - net.stabyourself.nottetris2
+  - section:
+      title: "Apps of the Month"
+  - featured-carousel: # A carousel, like the one seen at the top of the "Explore" page
+      # disable-auto-rotate: true
+      appids:
+        list:
+          - org.kde.drawy
+          - de.wwwtech.gitte
 
-  - sections:
-      - expand-horizontally: true
-        classes:
-          - global-section
-        light-classes:
-          - utilities-section
-        dark-classes:
-          - utilities-section-dark
-        category:
-          title: "Utilities"
-          subtitle: "Stuff you didn't need until now"
-          banner: file:///run/host/etc/bazaar/06-aurora-bazaar.jxl
-          banner-fit: cover
-          banner-text-halign: end
-          banner-text-valign: center
-          banner-height: 550
-          appids:
-            - app.drey.Warp
-            - org.localsend.localsend_app
-            - com.github.zocker_160.SyncThingy
-            - org.keepassxc.KeePassXC
-            - io.github.nokse22.asciidraw
-            - io.github.radiolamp.mangojuice
-            - org.fedoraproject.MediaWriter
-            - org.gnome.gitlab.YaLTeR.VideoTrimmer
-            - org.raspberrypi.rpi-imager
-            - org.kde.optiimage
-            - org.mozilla.vpn
-            - hu.irl.cameractrls
-            - org.gnome.gitlab.YaLTeR.Identity
-            - io.github.BuddySirJava.SSH-Studio
-            - au.stevetech.yafi
-            - io.github.pwr_solaar.solaar
-            - com.infinipaint.infinipaint
-            - org.gnome.Firmware
+  - section:
+      title: "Games"
+      subtitle:
+        string: |
+          In search of frying pans...
+      overflow-count: 4
+      list-type: rich # Directly features an install button on the card, use when a section has little apps.
+      appids:
+        list:
+          - com.valvesoftware.Steam
+          - org.prismlauncher.PrismLauncher
+          - com.heroicgameslauncher.hgl
+          - io.github.Faugus.faugus-launcher
+          - app.xemu.xemu
+          - at.vintagestory.VintageStory
+          - com.dec05eba.gpu_screen_recorder
+          - com.discordapp.Discord
+          - com.etlegacy.ETLegacy
+          - com.github.Matoking.protontricks
+          - com.github._0negal.Viper
+          - com.github.k4zmu2a.spacecadetpinball
+          - com.parsecgaming.parsec
+          - com.pokemmo.PokeMMO
+          - com.realm667.Wolfenstein_Blade_of_Agony
+          - com.snes9x.Snes9x
+          - com.supermodel3.Supermodel
+          - com.valvesoftware.SteamLink
+          - dev.goats.xivlauncher
+          - info.cemu.Cemu
+          - io.github.dosbox-staging
+          - io.github.shiiion.primehack
+          - io.github.stella_emu.Stella
+          - io.itch.itch
+          - io.mgba.mGBA
+          - io.mrarm.mcpelauncher
+          - net.davidotek.pupgui2
+          - net.hhoney.rota
+          - net.kuribo64.melonDS
+          - net.lutris.Lutris
+          - net.pcsx2.PCSX2
+          - net.retrodeck.retrodeck
+          - net.rpcs3.RPCS3
+          - net.stabyourself.nottetris2
+          - net.supertuxkart.SuperTuxKart
+          - org.DolphinEmu.dolphin-emu
+          - org.endlessaccess.threadbare
+          - org.kartkrew.RingRacers
+          - org.libretro.RetroArch
+          - org.mamedev.MAME
+          - org.openmw.OpenMW
+          - org.ppsspp.PPSSPP
+          - org.scummvm.ScummVM
+          - org.srb2.SRB2
+          - org.srb2.SRB2Kart
+          - org.supertuxproject.SuperTux
+          - org.vinegarhq.Sober
+          - org.zdoom.Raze
+          - org.zdoom.UZDoom
+          - page.kramo.Cartridges
+          - rs.ruffle.Ruffle
+          - sh.ppy.osu
 
-  - sections:
-      - expand-horizontally: true
-        classes:
-          - global-section
-        light-classes:
-          - dev-section
-        dark-classes:
-          - dev-section-dark
-        category:
-          title: "Developers"
-          subtitle: "Developers, developers, developers!"
-          banner: file:///run/host/etc/bazaar/07-aurora-bazaar.jxl
-          banner-fit: cover
-          banner-text-halign: start
-          banner-text-valign: center
-          banner-height: 700
-          appids:
-            - io.podman_desktop.PodmanDesktop
-            - io.kinvolk.Headlamp
-            - org.gnome.Builder
-            - com.getpostman.Postman
-            - org.kde.kdevelop
-            - io.dbeaver.DBeaverCommunity
-            - org.gitfourchette.gitfourchette
-            - com.mardojai.ForgeSparks
-            - com.github.marhkb.Pods
-            - cc.arduino.IDE2
-            - io.github.plrigaux.sysd-manager
-            - me.iepure.devtoolbox
+  - featured-carousel: # A carousel, like the one seen at the top of the "Explore" page
+      # disable-auto-rotate: true
+      appids:
+        list:
+          - org.endlessaccess.threadbare
+          - net.supertuxkart.SuperTuxKart
+          - com.github.k4zmu2a.spacecadetpinball
+          - net.stabyourself.nottetris2
+          - uk.co.powdertoy.tpt
+          - io.github.doukutsu_rs.doukutsu-rs
 
-  - sections:
-      - expand-horizontally: true
-        classes:
-          - global-section
-        light-classes:
-          - kde-section
-        dark-classes:
-          - kde-section-dark
-        category:
-          title: "KDE Apps"
-          subtitle: "Our favorite apps picked from KDE Developers"
-          light-banner: file:///run/host/etc/bazaar/09-aurora-bazaar-light.png
-          dark-banner: file:///run/host/etc/bazaar/09-aurora-bazaar-dark.png
-          banner-fit: cover
-          banner-text-halign: start
-          banner-text-valign: end
-          banner-height: 750
-          enable-bulk-install: true
-          appids:
-            - org.kde.elisa
-            - org.kde.kasts
-            - org.kde.kamoso
-            - org.kde.CrowTranslate
-            - org.kde.marknote
-            - org.kde.alligator
-            - org.kde.tokodon
-            - org.kde.neochat
-            - org.kde.keysmith
-            - org.kde.merkuro
-            - org.kde.kid3
+  - banner:
+      image:
+        uri: https://media.discordapp.net/attachments/1509751845206233128/1519082278838468718/bafkreifb2ojppomaxsgbph4vm5nlgm47dpl66qvvvknph4y32waswyuju4.png?ex=6a3c431e&is=6a3af19e&hm=bf631451ac25015e242bca779a25dd336f8a3b8a05f9ebacf65f91e41e2ee362&=&format=webp&quality=lossless&width=500&height=411
+        fit: scale-down
+        can-shrink: false
+  - section:
+      title: "Content Creation"
+      subtitle:
+        string: |
+          Create your first donut or make some tunes
+      list-type: rich # Directly features an install button on the card, use when a section has little apps.
+      overflow-count: 8
+      appids:
+        list:
+          - org.kde.krita
+          - org.ardour.Ardour
+          - org.kde.kdenlive
+          - org.blender.Blender
+          - org.inkscape.Inkscape
+          - org.audacityteam.Audacity
+          - com.obsproject.Studio
+          - com.inochi2d.inochi-session
+          - org.gimp.GIMP
+          - org.darktable.Darktable
+          - com.feaneron.Boatswain
 
-  - sections:
-      - expand-horizontally: true
-        classes:
-          - global-section
-        light-classes:
-          - ai-section
-        dark-classes:
-          - ai-section-dark
-        category:
-          title: "AI and Machine Learning"
-          subtitle: "Experience the best of open source AI"
-          banner: file:///run/host/etc/bazaar/08-aurora-bazaar.jxl
-          banner-fit: cover
-          banner-text-halign: start
-          banner-text-valign: center
-          banner-height: 550
-          appids:
-            - ai.jan.Jan
-            - com.jeffser.Alpaca
-            - ink.whis.Whis
-            - io.github.qwersyk.Newelle
+  - section:
+      title: "Music & Media"
+      subtitle:
+        string: |
+          Is this the real life? Is this just fantasy?
+      appids:
+        list: # Sections of 12 apps look nice at all window widths
+          - org.kde.elisa
+          - com.spotify.Client
+          - com.mastermindzh.tidal-hifi
+          - org.videolan.VLC
+          - tv.plex.PlexDesktop
+          - org.kde.kasts
+          - org.kde.arianna
+          - com.plexamp.Plexamp
+          - io.github.mhogomchungu.media-downloader
+          - com.github.wwmm.easyeffects
+          - me.timschneeberger.jdsp4linux
+          - org.jellyfin.JellyfinDesktop
+
+  - section:
+      title: "Developer Tools"
+      subtitle:
+        string: |
+          "Developers, developers, developers"
+      overflow-count: 4
+      list-type: rich
+      appids:
+        list:
+          - io.podman_desktop.PodmanDesktop
+          - me.iepure.devtoolbox
+          - org.gnome.Builder
+          - org.kde.kdevelop
+          - org.gitfourchette.gitfourchette
+          - com.mardojai.ForgeSparks
+          - com.github.marhkb.Pods
+          - cc.arduino.IDE2
+          - io.github.plrigaux.sysd-manager
+          - io.kinvolk.Headlamp
+
+  - section:
+      title: "Office & Productivity"
+      subtitle:
+        string: |
+          Let's do some work
+      appids:
+        list:
+        - com.collaboraoffice.Office
+        - com.slack.Slack
+        - md.obsidian.Obsidian
+        - org.onlyoffice.desktopeditors
+        - org.libreoffice.LibreOffice
+        - io.github.alainm23.planify
+        - io.github.nokse22.Exhibit
+        - io.gitlab.theevilskeleton.Upscaler
+        - com.bambulab.BambuStudio
+        - com.github.IsmaelMartinez.teams_for_linux
+        - com.super_productivity.SuperProductivity
+
+
+  - section:
+      subtitle:
+        string: |
+          If you love Bazaar please consider [donating](https://ko-fi.com/kolunmi) to the developers
+
