@@ -1,3 +1,6 @@
+# https://github.com/bazaar-org/bazaar/blob/main/docs/example.yaml
+# Don't put apps without branding colors into a "featured-carousel" it looks bad
+# on list: sections of 12 apps look nice at all window widths
 rows:
   - banner:
       height: 250
@@ -12,13 +15,34 @@ rows:
       light-color: "#c8c8c8"
 
   - section:
-      title: "Welcome to Bazaar"
+      title: "Blog posts"
       subtitle:
         string: |
-          [Contribute to this page](https://github.com/get-aurora-dev/common/blob/main/system_files/shared/etc/bazaar/curated.yaml)
+          Here we will share news related to Aurora and cool other projects
 
-      overflow-count: 4 # Will automatically create a "Show More" button, if there are more apps than the count (except if enable-bulk-install is true)
-      list-type: rich # Directly features an install button on the card, use when a section has little apps.
+  - articles:
+      list:
+        - title: "Stargazer 6-7" # Also used as the title on the article page
+          subtitle: "Aurora Happenings in the first half of 2026"
+          image: https://kde.org/announcements/plasma/6/6.7.0/blur_light_1920x1080.png
+          uri: https://raw.githubusercontent.com/ublue-os/aurora-docs/refs/heads/main/blog/2026-06-18-plasma-6-7-aurora-june.md
+
+        - title: "KDE 6.7 release"
+          image: https://kde.org/stuff/clipart/logo/kde-logo-white-blue-3000x3000.png
+          uri: https://invent.kde.org/websites/blogs-kde-org/-/raw/master/content/posts/twip/2026-06-20/index.md?ref_type=heads
+
+  - section:
+      title: "Apps of the Month"
+  - featured-carousel:
+      appids:
+        list:
+          - org.kde.drawy
+          - de.wwwtech.gitte
+
+  - section:
+      overflow-count: 4
+      title: "Our favorite applications"
+      list-type: rich
       appids:
         list:
           - io.github.vani_tty1.memerist
@@ -30,28 +54,6 @@ rows:
           - com.github.ADBeveridge.Raider
           - rocks.shy.VacuumTube
           - com.github.PintaProject.Pinta
-  - section:
-      title: "Aurora & KDE News"
-
-  - articles:
-      # uri: https://usebazaar.org/curated/articles.yaml # Can be used as a feed.
-      list: # Used only if URI fails, or is not given.
-        - title: "Stargazer 6-7" # Also used as the title on the article page
-          subtitle: "Aurora Happenings in the first half of 2026"
-          image: https://i.imgur.com/VMFWNaF.png # Always in 16:9
-          uri: https://raw.githubusercontent.com/ublue-os/aurora-docs/refs/heads/main/blog/2026-06-18-plasma-6-7-aurora-june.md
-        - title: "KDE 6.7 release"
-          image: https://kde.org/stuff/clipart/logo/kde-logo-white-blue-3000x3000.png
-          uri: https://invent.kde.org/websites/blogs-kde-org/-/raw/master/content/posts/twip/2026-06-20/index.md?ref_type=heads
-
-  - section:
-      title: "Apps of the Month"
-  - featured-carousel: # A carousel, like the one seen at the top of the "Explore" page
-      # disable-auto-rotate: true
-      appids:
-        list:
-          - org.kde.drawy
-          - de.wwwtech.gitte
 
   - section:
       title: "Games"
@@ -83,6 +85,7 @@ rows:
           - dev.goats.xivlauncher
           - info.cemu.Cemu
           - io.github.dosbox-staging
+          - io.github.doukutsu_rs.doukutsu-rs
           - io.github.shiiion.primehack
           - io.github.stella_emu.Stella
           - io.itch.itch
@@ -114,23 +117,8 @@ rows:
           - page.kramo.Cartridges
           - rs.ruffle.Ruffle
           - sh.ppy.osu
-
-  - featured-carousel: # A carousel, like the one seen at the top of the "Explore" page
-      # disable-auto-rotate: true
-      appids:
-        list:
-          - org.endlessaccess.threadbare
-          - net.supertuxkart.SuperTuxKart
-          - com.github.k4zmu2a.spacecadetpinball
-          - net.stabyourself.nottetris2
           - uk.co.powdertoy.tpt
-          - io.github.doukutsu_rs.doukutsu-rs
 
-  - banner:
-      image:
-        uri: https://media.discordapp.net/attachments/1509751845206233128/1519082278838468718/bafkreifb2ojppomaxsgbph4vm5nlgm47dpl66qvvvknph4y32waswyuju4.png?ex=6a3c431e&is=6a3af19e&hm=bf631451ac25015e242bca779a25dd336f8a3b8a05f9ebacf65f91e41e2ee362&=&format=webp&quality=lossless&width=500&height=411
-        fit: scale-down
-        can-shrink: false
   - section:
       title: "Content Creation"
       subtitle:
@@ -158,7 +146,7 @@ rows:
         string: |
           Is this the real life? Is this just fantasy?
       appids:
-        list: # Sections of 12 apps look nice at all window widths
+        list:
           - org.kde.elisa
           - com.spotify.Client
           - com.mastermindzh.tidal-hifi
@@ -211,9 +199,7 @@ rows:
         - com.github.IsmaelMartinez.teams_for_linux
         - com.super_productivity.SuperProductivity
 
-
   - section:
       subtitle:
         string: |
-          If you love Bazaar please consider [donating](https://ko-fi.com/kolunmi) to the developers
-
+          [Contribute to this page](https://github.com/get-aurora-dev/common/blob/main/system_files/shared/etc/bazaar/curated.yaml)
