@@ -1,89 +1,122 @@
 FROM docker.io/library/alpine:latest AS builder
 
-RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert
+RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert just
 
-COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest / /wallpapers
+COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest@sha256:270b3b10cd6fd54e322407275e24b86655c2472738186b1a825786ce26d4ce50 / /wallpapers
 
 COPY /logos /logos
 
-RUN set -xeuo pipefail && \
-    cd /wallpapers && \
-    rm -rf kde/*/gnome-background-properties/ && \
-    mkdir -p /out/wallpapers/usr/share/wallpapers /out/wallpapers/usr/share/backgrounds && \
-    mv kde/ /out/wallpapers/usr/share/backgrounds/aurora/ && \
-    cd /out/wallpapers/usr/share/backgrounds && \
-    for dir in aurora/*; do \
-      ln -sr "/out/wallpapers/usr/share/backgrounds/${dir}" /out/wallpapers/usr/share/wallpapers/; \
-    done && \
-    ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-6/ /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-1 && \
-    ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-1/ /out/wallpapers/usr/share/wallpapers/ && \
-    rm -rf /wallpapers
+RUN <<EOF
+set -xeuo pipefail
+
+cd /wallpapers
+rm -rf kde/*/gnome-background-properties/
+mkdir -p /out/wallpapers/usr/share/wallpapers /out/wallpapers/usr/share/backgrounds
+mv kde/ /out/wallpapers/usr/share/backgrounds/aurora/
+cd /out/wallpapers/usr/share/backgrounds
+
+for dir in aurora/*; do
+  ln -sr "/out/wallpapers/usr/share/backgrounds/${dir}" /out/wallpapers/usr/share/wallpapers/
+done
+
+ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-6/ /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-1
+ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-1/ /out/wallpapers/usr/share/wallpapers/
+rm -rf /wallpapers
+EOF
 
 # Here we set our default wallpaper
-RUN set -xeuo pipefail && \
-    REV=12 && \
-    ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}"/contents/images/3840x2160.jxl /out/wallpapers/usr/share/backgrounds/default.jxl && \
-    ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}"/contents/images/3840x2160.jxl /out/wallpapers/usr/share/backgrounds/default-dark.jxl && \
-    ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}" /out/wallpapers/usr/share/wallpapers/Aurora && \
-    ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora.xml /out/wallpapers/usr/share/backgrounds/default.xml
+RUN <<EOF
+set -xeuo pipefail
 
-RUN set -xeuo pipefail && \
-    mkdir -p /out/logos/usr/share/icons/hicolor/scalable/apps && \
-    mkdir -p /out/logos/usr/share/icons/hicolor/scalable/places && \
-    mkdir -p /out/logos/usr/share/pixmaps && \
-    cp /logos/distributor-logo.svg /out/logos/usr/share/icons/hicolor/scalable && \
-    cp \
-      /logos/auroralogo-white.svg \
-      /logos/distributor-logo-symbolic.svg \
-      /logos/auroralogo-circle-symbolic.svg \
-      /logos/auroralogo-pride.svg \
-      /logos/auroralogo-pride-trans.svg \
-      /out/logos/usr/share/icons/hicolor/scalable/places/ && \
+REV=12
+ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}"/contents/images/3840x2160.jxl /out/wallpapers/usr/share/backgrounds/default.jxl
+ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}"/contents/images/3840x2160.jxl /out/wallpapers/usr/share/backgrounds/default-dark.jxl
+ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}" /out/wallpapers/usr/share/wallpapers/Aurora
+ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora.xml /out/wallpapers/usr/share/backgrounds/default.xml
+EOF
 
-    cp /logos/aurora-banner.svg /out/logos/usr/share/pixmaps/ && \
-    ln -sr /out/logos/usr/share/pixmaps/aurora-banner.svg /out/logos/usr/share/pixmaps/fedora-logo.svg && \
+RUN <<EOF
+set -xeuo pipefail
 
-    magick -background none /logos/aurora-banner.svg -quality 90 -resize $((400-10*2))x100 -gravity center -extent 400x100 /out/logos/usr/share/pixmaps/fedora-logo.png && \
-    magick -background none /logos/aurora-banner.svg -quality 90 -resize $((128-3*2))x32 -gravity center -extent 128x32 /out/logos/usr/share/pixmaps/fedora-logo-small.png && \
-    magick -background none /logos/aurora-banner.svg -quality 90 -resize $((200-5*2))x50 -gravity center -extent 200x100 /out/logos/usr/share/pixmaps/fedora_logo_med.png  && \
-    magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! /out/logos/usr/share/pixmaps/system-logo.png  && \
-    magick -background none /logos/distributor-logo.svg -quality 90 -resize 128x128! /out/logos/usr/share/pixmaps/fedora-logo-sprite.png  && \
-    magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! /out/logos/usr/share/pixmaps/system-logo-white.png  && \
+mkdir -p /out/logos/usr/share/icons/hicolor/scalable/apps
+mkdir -p /out/logos/usr/share/icons/hicolor/scalable/places
+mkdir -p /out/logos/usr/share/pixmaps
+cp /logos/distributor-logo.svg /out/logos/usr/share/icons/hicolor/scalable
+cp \
+  /logos/auroralogo-white.svg \
+  /logos/distributor-logo-symbolic.svg \
+  /logos/auroralogo-circle-symbolic.svg \
+  /logos/auroralogo-pride.svg \
+  /logos/auroralogo-pride-trans.svg \
+  /out/logos/usr/share/icons/hicolor/scalable/places/
 
-    ln -sr /out/logos/usr/share/pixmaps/aurora-banner.svg /out/logos/usr/share/pixmaps/fedora_whitelogo.svg && \
-    ln -sr /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg /out/logos/usr/share/pixmaps/fedora-logo-sprite.svg && \
-    ln -sr /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo.svg && \
-    ln -sr /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg /out/logos/usr/share/icons/hicolor/scalable/places/auroralogo-gradient.svg && \
-    ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-symbolic.svg /out/logos/usr/share/icons/hicolor/scalable/places/auroralogo-symbolic.svg && \
-    ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-symbolic.svg /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-white.svg && \
-    ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-symbolic.svg /out/logos/usr/share/icons/hicolor/scalable/places/start-here.svg && \
-    ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-symbolic.svg /out/logos/usr/share/icons/hicolor/scalable/apps/start-here.svg
+cp /logos/aurora-banner.svg /out/logos/usr/share/pixmaps/
+ln -sr /out/logos/usr/share/pixmaps/aurora-banner.svg /out/logos/usr/share/pixmaps/fedora-logo.svg
 
-RUN set -xeuo pipefail && \
-  mkdir -p /out/logos/usr/share/plymouth/themes/spinner/ && \
-  magick -background none /out/logos/usr/share/pixmaps/aurora-banner.svg -quality 90 -resize $((128-3*2))x32 -gravity center -extent 128x32 /out/logos/usr/share/plymouth/themes/spinner/watermark.png && \
-  cp /out/logos/usr/share/plymouth/themes/spinner/watermark.png /out/logos/usr/share/plymouth/themes/spinner/kinoite-watermark.png && \
-  mkdir -p /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/ && \
-  gzip -c /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg > /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/aurora_logo.svgz && \
-  curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/busywidget.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/busywidget.svgz && \
-  curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/kde.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/kde.svgz && \
-  curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/plasma.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/plasma.svgz && \
-  mkdir -p /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/splash/images && \
-  cp -r /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/
+magick -background none /logos/aurora-banner.svg -quality 90 -resize $((400-10*2))x100 -gravity center -extent 400x100 /out/logos/usr/share/pixmaps/fedora-logo.png
+magick -background none /logos/aurora-banner.svg -quality 90 -resize $((128-3*2))x32 -gravity center -extent 128x32 /out/logos/usr/share/pixmaps/fedora-logo-small.png
+magick -background none /logos/aurora-banner.svg -quality 90 -resize $((200-5*2))x50 -gravity center -extent 200x100 /out/logos/usr/share/pixmaps/fedora_logo_med.png
+magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! /out/logos/usr/share/pixmaps/system-logo.png
+magick -background none /logos/distributor-logo.svg -quality 90 -resize 128x128! /out/logos/usr/share/pixmaps/fedora-logo-sprite.png
+magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! /out/logos/usr/share/pixmaps/system-logo-white.png
+
+ln -sr /out/logos/usr/share/pixmaps/aurora-banner.svg /out/logos/usr/share/pixmaps/fedora_whitelogo.svg
+ln -sr /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg /out/logos/usr/share/pixmaps/fedora-logo-sprite.svg
+ln -sr /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo.svg
+ln -sr /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg /out/logos/usr/share/icons/hicolor/scalable/places/auroralogo-gradient.svg
+ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-symbolic.svg /out/logos/usr/share/icons/hicolor/scalable/places/auroralogo-symbolic.svg
+ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-symbolic.svg /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-white.svg
+ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-symbolic.svg /out/logos/usr/share/icons/hicolor/scalable/places/start-here.svg
+ln -sr /out/logos/usr/share/icons/hicolor/scalable/places/distributor-logo-symbolic.svg /out/logos/usr/share/icons/hicolor/scalable/apps/start-here.svg
+EOF
+
+RUN <<EOF
+set -xeuo pipefail
+
+mkdir -p /out/logos/usr/share/plymouth/themes/spinner/
+magick -background none /out/logos/usr/share/pixmaps/aurora-banner.svg -quality 90 -resize $((128-3*2))x32 -gravity center -extent 128x32 /out/logos/usr/share/plymouth/themes/spinner/watermark.png
+cp /out/logos/usr/share/plymouth/themes/spinner/watermark.png /out/logos/usr/share/plymouth/themes/spinner/kinoite-watermark.png
+mkdir -p /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/
+gzip -c /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg > /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/aurora_logo.svgz
+curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/busywidget.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/busywidget.svgz
+curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/kde.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/kde.svgz
+curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/plasma.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/plasma.svgz
+mkdir -p /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/splash/images
+cp -r /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents/
+EOF
 COPY /system_files/shared /out/system_files/shared
 
 # Copy default dark variant things to light variant so that it is shared
 # Effectively are symlinks but we can't do that here because themes can't execute files of other themes
-RUN set -xeuo pipefail && \
-  cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/plasmoidsetupscripts/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents && \
-  cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents && \
-  cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/layouts /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
+RUN <<EOF
+set -xeuo pipefail
 
-FROM ghcr.io/projectbluefin/common@sha256:6844adce0a79e18ab87c856a88115d03f957e2c67691e706882436f5625fa80b AS bluefin
+cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/plasmoidsetupscripts/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
+cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/ /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
+cp -r /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/layouts /out/system_files/shared/usr/share/plasma/look-and-feel/dev.getaurora.auroralight.desktop/contents
+EOF
+
+RUN <<EOF
+set -xeuo pipefail
+
+install -d /out/system_files/shared/usr/share/bash-completion/completions /out/system_files/shared/usr/share/zsh/site-functions /out/system_files/shared/usr/share/fish/vendor_completions.d/
+just --completions bash | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/bash-completion/completions/ujust
+just --completions zsh | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/zsh/site-functions/_ujust
+just --completions fish | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/fish/vendor_completions.d/ujust.fish
+EOF
+
+RUN <<EOF
+# FIXME: Renovate
+curl -fsSLo - https://codeberg.org/fabiscafe/game-devices-udev/archive/1.0.tar.gz | tar xzvf - -C tmp/
+for f in tmp/game-devices-udev/src/*.rules; do
+  install -Dpm0644 "$f" "out/system_files/shared/usr/lib/udev/rules.d/71-${f##*/}";
+done
+curl -fsSLo /out/system_files/shared/usr/lib/udev/rules.d/70-u2f.rules https://raw.githubusercontent.com/Yubico/libfido2/refs/heads/main/udev/70-u2f.rules
+EOF
 
 FROM scratch AS ctx
-COPY --from=bluefin /system_files/shared /system_files/shared
-COPY --from=bluefin /system_files/nvidia /system_files/nvidia
+COPY aurorafin-shared/system_files/shared /system_files/shared
+COPY aurorafin-shared/system_files/nvidia /system_files/nvidia
 COPY --from=builder /out/wallpapers /wallpapers
 COPY --from=builder /out/logos /logos
 COPY --from=builder /out/system_files/shared /system_files/shared

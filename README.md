@@ -1,16 +1,17 @@
 # aurora-common
 
-Shared OCI layer containing configuration files for Aurora and Aurora-DX variants.
+Shared OCI layer containing configuration files for https://github.com/ublue-os/aurora.
 
-## Repository Structure
-
-This layer builds on top of `ghcr.io/projectbluefin/common` and `https://github.com/get-aurora-dev/branding` which includes:
+This repo builds on top of:
+- https://github.com/ublue-os/aurorafin-shared
+- https://github.com/get-aurora-dev/branding
+- https://github.com/ublue-os/artwork
 
 - `system_files/shared/` - Configuration shared between Aurora and Aurora-DX
 - `system_files/dx/` - Aurora-DX specific configuration
 - `wallpapers/` - Aurora wallpapers from [artwork repo](https://github.com/ublue-os/artwork)
 - `system_files/shared/usr/share/ublue-os/homebrew/` - Flatpak definitions used for including flatpaks for the ISOs and `ujust install-system-flatpaks` - [Yes, homebrew supports the installation of Flatpaks](https://github.com/Homebrew/brew/pull/21097)
-- `logos/` - Aurora Logos used in SDDM/Plasma Kickoff etc.
+- `logos/` - Aurora Logos used in PLM/Plasma Kickoff etc.
 
 Related work is on the [Fedora KDE-SIG](https://forge.fedoraproject.org/kde)
 
