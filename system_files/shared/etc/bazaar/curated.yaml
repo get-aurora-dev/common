@@ -22,17 +22,19 @@ rows:
 
   - articles:
       list:
-        - title: "Stargazer 6-7" # Also used as the title on the article page
+        - title: "Stargazer 6-7"
           subtitle: "Aurora Happenings in the first half of 2026"
           image: https://kde.org/announcements/plasma/6/6.7.0/blur_light_1920x1080.png
           uri: https://raw.githubusercontent.com/ublue-os/aurora-docs/refs/heads/main/blog/2026-06-18-plasma-6-7-aurora-june.md
 
-        - title: "KDE 6.7 release"
-          image: https://kde.org/stuff/clipart/logo/kde-logo-white-blue-3000x3000.png
-          uri: https://invent.kde.org/websites/blogs-kde-org/-/raw/master/content/posts/twip/2026-06-20/index.md?ref_type=heads
+        - title: "Retiring stable-daily stream"
+          subtitle: "Aurora Happenings in the first half of 2026"
+          image: 
+          uri: https://raw.githubusercontent.com/ublue-os/aurora-docs/refs/heads/main/blog/2026-06-18-plasma-6-7-aurora-june.md
+
 
   - section:
-      title: "Apps of the Month"
+      title: "Apps of the Season"
   - featured-carousel:
       appids:
         list:
