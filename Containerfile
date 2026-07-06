@@ -28,7 +28,7 @@ EOF
 RUN <<EOF
 set -xeuo pipefail
 
-REV=12
+REV=4
 ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}"/contents/images/3840x2160.jxl /out/wallpapers/usr/share/backgrounds/default.jxl
 ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}"/contents/images/3840x2160.jxl /out/wallpapers/usr/share/backgrounds/default-dark.jxl
 ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}" /out/wallpapers/usr/share/wallpapers/Aurora
