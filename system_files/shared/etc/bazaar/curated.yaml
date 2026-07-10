@@ -21,17 +21,29 @@ rows:
           Here we will share news related to Aurora and cool other projects
 
   - articles:
+      aspect-ratio: 3.55
       list:
         - title: "Stargazer 6-7"
-          subtitle: "Aurora Happenings in the first half of 2026"
+          subtitle: "Aurora Report for the first half of 2026"
           image: https://kde.org/announcements/plasma/6/6.7.0/blur_light_1920x1080.png
           uri: https://raw.githubusercontent.com/ublue-os/aurora-docs/refs/heads/main/blog/2026-06-18-plasma-6-7-aurora-june.md
 
         - title: "Retiring stable-daily stream"
           subtitle: "Aurora Happenings in the first half of 2026"
-          image: 
+          image: file:///run/host/etc/bazaar/03-aurora-bazaar.jxl
           uri: https://raw.githubusercontent.com/ublue-os/aurora-docs/refs/heads/main/blog/2026-06-18-plasma-6-7-aurora-june.md
 
+        - title: "Aurora Release Changelogs"
+          subtitle: ""
+          image: file:///run/host/etc/bazaar/04-aurora-bazaar.jxl
+          # for now figure out a way to convert webpages into md
+          uri: https://markdown.microlink.io/https://github.com/ublue-os/aurora/releases/latest
+          # uri: https://markdown.download/https://github.com/ublue-os/aurora/releases/latest
+
+        - title: "This Week in Plasma"
+          subtitle: "Keep up with the kool stuff that is happening in KDE Plasma"
+          image: https://kde.org/announcements/plasma/6/6.6.0/blur_light_1920x1080.png
+          uri: https://invent.kde.org/websites/blogs-kde-org/-/raw/master/content/posts/twip/2026-07-11/index.md?ref_type=heads
 
   - section:
       title: "Apps of the Season"
