@@ -87,23 +87,46 @@ toggle-devmode:
 # Configure docker,incus-admin,libvirt, container manager, serial permissions
 [group('System')]
 dx-group:
-    #!/usr/bin/pkexec bash
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    if [ "$EUID" -eq 0 ]; then
+      echo "This script should not be run as root."
+      exit 1
+    fi
+
     append_group() {
         local group_name="$1"
         if ! grep -q "^$group_name:" /etc/group; then
             echo "Appending $group_name to /etc/group"
-            grep "^$group_name:" /usr/lib/group | sudo tee -a /etc/group > /dev/null
+            grep "^$group_name:" /usr/lib/group | pkexec tee -a /etc/group > /dev/null
         fi
     }
 
     GROUPS_ADD=("docker" "incus-admin" "libvirt" "dialout")
 
-    for GROUP_ADD in "${GROUPS_ADD[@]}" ; do
-        append_group $GROUP_ADD
-        usermod -aG $GROUP_ADD $USER
-    done
+    echo "Note that this has security implications and may allow writing to critical system files without authentication."
+    echo "See: https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user"
 
-    echo "Reboot system and log back in to use docker, libvirt, incus, and serial connections."
+    SELECTED_GROUPS=$(gum choose --no-limit --header="Select groups (with spacebar key) to add your \"${USER}\" user account to:" "${GROUPS_ADD[@]}")
+
+    if [[ -n "$SELECTED_GROUPS" ]]; then
+      mapfile -t TARGET_GROUPS <<< "$SELECTED_GROUPS"
+
+      for GROUP in "${TARGET_GROUPS[@]}"; do
+          append_group "$GROUP"
+      done
+
+      ALL_SELECTED_GROUPS=$(IFS=,; echo "${TARGET_GROUPS[*]}")
+
+      echo "Adding \"${USER}\" to selected groups: ${ALL_SELECTED_GROUPS}"
+
+      pkexec usermod -aG "$ALL_SELECTED_GROUPS" "$USER"
+
+      echo "Reboot system and log back in for changes to take effect."
+    else
+      echo "No groups selected."
+    fi
 
 # Install system flatpaks for rebasers
 [group('System')]
