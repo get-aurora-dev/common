@@ -1,6 +1,8 @@
+# Make sure to sync with: https://forge.fedoraproject.org/kde/kde-settings/src/branch/rawhide/usr/share/kde-settings/kde-profile/default/xdg/kwinrc
 [Wayland]
-InputMethod[$e]=/usr/share/applications/com.github.maliit.keyboard.desktop
+InputMethod[$e]=/usr/share/applications/org.kde.plasma.keyboard.desktop
 VirtualKeyboardEnabled=true
+EnablePrimarySelection=false
 
 [Plugins]
 blurEnabled=true

@@ -24,8 +24,8 @@ IMAGE_NAME="$(gum choose --header="Select your image:" "${IMAGES[@]}" cancel)"
 
 base_image="${IMAGE_REGISTRY}/${IMAGE_NAME}"
 declare -a CHANNELS
-CHANNELS=(stable latest)
-  echo "The default selection is stable (weekly builds) and latest is for enthusiasts and testers."
+CHANNELS=(stable latest testing)
+  echo -e "\nstable: The default selection (weekly builds) with gated CoreOS kernel\nlatest: For enthusiast, stock Fedora kernel and latest updates\ntesting: Get a sneak peak into future Aurora builds and Fedora versions\n\nSee our docs: https://docs.getaurora.dev/guides/release-streams\n"
 
 channel_choice="$(gum choose "${CHANNELS[@]}" cancel)"
 [[ "$channel_choice" == "cancel" || "$channel_choice" == "" ]] && exit 0
