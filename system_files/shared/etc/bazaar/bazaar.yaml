@@ -3,3 +3,6 @@ yaml-blocklist-paths:
 
 curated-config-paths:
   - /run/host/etc/bazaar/curated.yaml
+
+# We have blogs/news, let's make it more likely for people to see it
+start-on-curated: true
