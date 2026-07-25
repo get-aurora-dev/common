@@ -271,11 +271,10 @@ configure-boot-to-windows:
 [group('System')]
 toggle-iwd:
     #!/usr/bin/bash
-    echo -e "This script manages enabling or disabling iwd as a replacement for wpa_supplicant for Wi-Fi networking."
-    echo -e "Enabling this can improve throughput, mesh networking, and reduce latency increases when scanning for networks"
-    echo -e "Disabling this can improve corporate or eduroam network compatibility"
-    echo -e ""
-    echo -e "WARNING: Changing this will remove all saved wifi networks"
+    echo -e "This script disables IWD, in case it was enabled in the past, IWD was a replacement for wpa_supplicant for Wi-Fi networking."
+    echo -e "The upstream IWD project is not developed anymore."
+    echo -e "This script will be removed in the future."
+
     get_current_status() {
       if [[ -f "/etc/NetworkManager/conf.d/iwd.conf" ]]; then
         echo "Enabled"
@@ -286,28 +285,27 @@ toggle-iwd:
     remove_saved_networks() {
       nmcli -t -f NAME connection show | while read -r line; do sudo nmcli connection delete "$line"; done
     }
-    enable_iwd() {
-      sudo mkdir -p "/etc/NetworkManager/conf.d/"
-      sudo rm -f "/etc/NetworkManager/conf.d/iwd.conf"
-      printf "[device]\nwifi.backend=iwd" | sudo tee /etc/NetworkManager/conf.d/iwd.conf > /dev/null
-      remove_saved_networks
-      echo -e "iwd enabled. Reboot required to apply changes."
-    }
     disable_iwd() {
       sudo rm -f "/etc/NetworkManager/conf.d/iwd.conf"
       remove_saved_networks
-      echo -e "iwd disabled. Reboot required to apply changes."
+      echo -e "IWD disabled. Reboot required to apply changes."
     }
     # Display current status
     current_status=$(get_current_status)
-    echo -e "\nCurrent iwd status: $current_status\n"
+    echo -e "\nCurrent IWD status: $current_status\n"
+
+    if [[ "$current_status" == "Disabled" ]]; then
+      echo "IWD is already disabled. Nothing to do."
+      exit 0
+    fi
+
+    echo -e "WARNING: Changing this will remove all saved (Wi-Fi) networks (including wired ethernet ones)."
+    echo -e "You will have to manually add networks back in the 'Wi-Fi & Networking' Tab"
+
     # Prompt user for action
-    CHOICE=$(gum choose "Enable iwd" "Disable iwd" "Exit without changes")
+    CHOICE=$(gum choose "Disable IWD" "Exit without changes")
     case "$CHOICE" in
-      "Enable iwd")
-        enable_iwd
-        ;;
-      "Disable iwd")
+      "Disable IWD")
         disable_iwd
         ;;
       "Exit without changes")
