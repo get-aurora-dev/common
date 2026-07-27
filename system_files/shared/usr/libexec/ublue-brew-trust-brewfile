@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Parses a Brewfile and trusts all declared taps via `brew trust --tap`.
+#
+# Usage: ublue-brew-trust-brewfile <path-to-Brewfile>
+
+set -euo pipefail
+
+brewfile="${1:?Usage: ublue-brew-trust-brewfile <path-to-Brewfile>}"
+
+if [[ ! -f "$brewfile" ]]; then
+  echo "ublue-brew-trust-brewfile: file not found: $brewfile" >&2
+  exit 1
+fi
+
+# Matches 'tap "foo/bar"'
+tap_pattern='^tap[[:space:]]+"([^"]+)"'
+
+while IFS= read -r line; do
+  if [[ "$line" =~ $tap_pattern ]]; then
+    tap="${BASH_REMATCH[1]}"
+    brew trust --tap "$tap"
+  fi
+done <"$brewfile"
