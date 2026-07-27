@@ -1,5 +1,4 @@
 # vim: set ft=make :
-# These are recipes that are generic and should be available in bluefin and aurora
 
 # Toggle LUKS auto-unlock via TPM2
 [group('System')]

@@ -115,8 +115,7 @@ curl -fsSLo /out/system_files/shared/usr/lib/udev/rules.d/70-u2f.rules https://r
 EOF
 
 FROM scratch AS ctx
-COPY aurorafin-shared/system_files/shared /system_files/shared
-COPY aurorafin-shared/system_files/nvidia /system_files/nvidia
+COPY system_files/nvidia /system_files/nvidia
 COPY --from=builder /out/wallpapers /wallpapers
 COPY --from=builder /out/logos /logos
 COPY --from=builder /out/system_files/shared /system_files/shared
