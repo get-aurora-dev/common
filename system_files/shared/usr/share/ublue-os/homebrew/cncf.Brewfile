@@ -19,7 +19,6 @@ tap "kptdev/kpt", "https://github.com/kptdev/kpt.git"
 tap "wasmcloud/wasmcloud"
 tap "artifacthub/cmd"
 tap "pingcap/brew"
-tap "kcl-lang/tap"
 # === GRADUATED PROJECTS ===
 
 # Argo
@@ -218,9 +217,6 @@ brew "devspace"
 
 # K8sGPT
 brew "k8sgpt"
-
-# KCL
-brew "kcl-lang/tap/kcl"
 
 # KitOps
 brew "kitops-ml/kitops/kitops"
