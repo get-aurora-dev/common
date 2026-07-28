@@ -88,7 +88,14 @@ jobs:
       - name: Sign container image
         if: github.event_name != 'pull_request'
         run: |
+          # Sign with both OIDC and static key so we have compatibility with both
+          # https://github.com/containers/container-libs/issues/388
+          # https://github.com/coreos/rpm-ostree/issues/5509
           cosign sign -y ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}@${TAGS}
+
+          # use old bundle format, so we can use newer cosign 3.X.X instead of 2.X.X
+          cosign sign -y --new-bundle-format=false --use-signing-config=false --key env://COSIGN_PRIVATE_KEY ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}@${TAGS}
         env:
           TAGS: ${{ steps.push.outputs.digest }}
           COSIGN_EXPERIMENTAL: false
+          COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
