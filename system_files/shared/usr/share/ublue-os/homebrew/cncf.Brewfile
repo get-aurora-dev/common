@@ -98,9 +98,6 @@ brew "prometheus"
 # SPIRE
 # brew "spire" # Use manual install (spire-server/agent)
 
-# TiKV
-brew "tiup"
-
 # Vitess
 brew "vitess"
 
