@@ -41,6 +41,17 @@
                     }
                 }
             ],
+            "ghcr.io/get-aurora-dev": [
+                {
+                    "type": "sigstoreSigned",
+                    "keyPaths": [
+                        "/usr/lib/pki/containers/ghcr.io-get-aurora-dev.pub"
+                    ],
+                    "signedIdentity": {
+                        "type": "matchRepository"
+                    }
+                }
+            ],
             "": [
                 {
                     "type": "insecureAcceptAnything"
