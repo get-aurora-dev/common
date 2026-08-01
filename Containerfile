@@ -99,10 +99,8 @@ EOF
 RUN <<EOF
 set -xeuo pipefail
 
-install -d /out/system_files/shared/usr/share/bash-completion/completions /out/system_files/shared/usr/share/zsh/site-functions /out/system_files/shared/usr/share/fish/vendor_completions.d/
-just --completions bash | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/bash-completion/completions/ujust
-just --completions zsh | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/zsh/site-functions/_ujust
-just --completions fish | sed -E 's/([\(_" ])just/\1ujust/g' > /out/system_files/shared/usr/share/fish/vendor_completions.d/ujust.fish
+install -d /out/system_files/shared/usr/share/bash-completion/completions
+JUST_COMPLETE=bash just | sed -E 's/just/ujust/g' > /out/system_files/shared/usr/share/bash-completion/completions/ujust
 EOF
 
 RUN <<EOF
