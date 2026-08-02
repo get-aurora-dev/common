@@ -1,0 +1,22 @@
+# https://forge.fedoraproject.org/kde/plasma-welcome-fedora/src/branch/main/data/intro-customization.desktop.in
+# This currently also fixes: https://bugs.kde.org/show_bug.cgi?id=523540
+[Desktop Entry]
+# Required since this is a Desktop file; ignored
+Type=Application
+
+# Required; becomes the first paragraph on the Welcome page
+# Don't forget to offer translations of the text!
+Name=Welcome to Aurora
+Name[de]=Willkommen bei Aurora
+
+# Optional; replaces the default image on the Welcome page
+# can be an icon name or an absolute path to an image on disk beginning with file:/
+Icon=distributor-logo
+
+# Optional; replaces the default image caption on the Welcome page
+# Don't forget to offer translations of the text!
+Comment=Stay up-to-date by visiting our Blog!
+Comment[de]=Bleiben Sie auf dem neuesten Stand, indem Sie unseren Blog besuchen.
+
+# Optional; replaces the default URL opened when clicking on the Welcome page's image or icon
+URL=https://docs.getaurora.dev/blog
