@@ -4,7 +4,10 @@ alias upgrade := update
 
 # Update system, flatpaks and homebrew packages all at once
 update:
-    #!/usr/bin/bash
+    #!/usr/bin/env bash
+
+    set -eou pipefail
+
     if systemctl cat -- uupd.timer &> /dev/null; then
         SERVICE="uupd.service"
     else
@@ -14,12 +17,40 @@ update:
         echo "automatic updates are currently running, use \`journalctl -fexu $SERVICE\` to see logs"
         exit 1
     fi
-    if command -v rpm-ostree >/dev/null 2>&1 && [ -f /etc/rpm-ostreed.conf ] && grep -q -E -e "^[[:space:]]*LockLayering[[:space:]]*=[[:space:]]*true([[:space:]]*(#.*)?)?$" /etc/rpm-ostreed.conf ; then
-        sudo bootc upgrade
+
+    if grep -q -E "(^|\s)composefs=.*\S" /proc/cmdline; then
+        IS_COMPOSEFS="true"
+        IS_OSTREE="false"
+    elif grep -q -E "(^|\s)ostree=.*\S" /proc/cmdline; then
+        IS_COMPOSEFS="false"
+        IS_OSTREE="true"
     else
-        rpm-ostree upgrade
+      echo "Not booted, nothing to upgrade."
+      exit 1
     fi
-    # rpm-ostree used due to bootc upgrade not supporting local layered packages
+
+    if [[ "${IS_COMPOSEFS}" == "true" ]]; then
+        sudo bootc upgrade
+
+    elif [[ "${IS_OSTREE}" == "true" ]]; then
+      STATUS=$(sudo bootc status --json | jq ".status")
+
+      STAGED_INCOMPAT=$(echo "${STATUS}" | jq ".staged.incompatible")
+      BOOTED_INCOMPAT=$(echo "${STATUS}" | jq ".booted.incompatible")
+
+      if [[ "${STAGED_INCOMPAT}" == "true" || ( "${BOOTED_INCOMPAT}" == "true" && -z "${STAGED_INCOMPAT}" ) || "${BOOTED_INCOMPAT}" == "true" ]]; then
+          INCOMPAT="true"
+      else
+          INCOMPAT="false"
+      fi
+
+        if [[ "${INCOMPAT}" == "true" ]]; then
+            rpm-ostree upgrade
+        else
+            sudo bootc upgrade
+        fi
+    fi
+
     # Updates system Flatpaks
     if flatpak remotes | grep -q system; then
         flatpak update -y
