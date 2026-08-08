@@ -86,7 +86,7 @@ jobs:
         if: github.event_name != 'pull_request'
         with:
           # be careful when upgrading major versions
-          cosign-release: 'v3.1.2'
+          cosign-release: 'v3.1.3'
 
       - name: Sign container image
         if: github.event_name != 'pull_request'
