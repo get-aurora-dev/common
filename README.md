@@ -54,6 +54,24 @@ cosign verify \
 just build
 ```
 
+## How to test changes
+
+This is not as thorough as building this container, and building Aurora itself with that local copy but is mostly good enough for quick iteration.
+
+Use [sysextbuddy](https://github.com/tulilirockz/sysextbuddy/). It is currently limited to `/usr` because `--install-mode confext` for `/etc` is currently harder to do because of selinux.
+
+```
+sysextbuddy -i system_files/shared
+```
+
+Things that are generated/modified during the container build like wallpapers are missing here so do `just dump` and then
+
+```
+sysextbuddy -i dump/system_files/shared
+```
+
+instead.
+
 ## Additional Commands
 
 ```bash
