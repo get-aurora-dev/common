@@ -36,6 +36,8 @@ update:
         sudo bootc upgrade
 
     elif [[ "${IS_OSTREE}" == "true" ]]; then
+      # Without password would be nice
+      # https://github.com/bootc-dev/bootc/issues/409
       STATUS=$(sudo bootc status --json | jq ".status")
 
       STAGED_INCOMPAT=$(echo "${STATUS}" | jq ".staged.incompatible")
