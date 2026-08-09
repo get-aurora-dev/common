@@ -18,12 +18,15 @@ update:
         exit 1
     fi
 
-    if grep -q -E "(^|\s)composefs=.*\S" /proc/cmdline; then
-        IS_COMPOSEFS="true"
-        IS_OSTREE="false"
+    if systemd-detect-virt --container -q; then
+      echo "Running inside a container environment, nothing to upgrade"
+      exit 1
+    elif grep -q -E "(^|\s)composefs=.*\S" /proc/cmdline; then
+      IS_COMPOSEFS="true"
+      IS_OSTREE="false"
     elif grep -q -E "(^|\s)ostree=.*\S" /proc/cmdline; then
-        IS_COMPOSEFS="false"
-        IS_OSTREE="true"
+      IS_COMPOSEFS="false"
+      IS_OSTREE="true"
     else
       echo "Not booted, nothing to upgrade."
       exit 1
