@@ -14,12 +14,16 @@ update:
         echo "automatic updates are currently running, use \`journalctl -fexu $SERVICE\` to see logs"
         exit 1
     fi
-    if command -v rpm-ostree >/dev/null 2>&1 && [ -f /etc/rpm-ostreed.conf ] && grep -q -E -e "^[[:space:]]*LockLayering[[:space:]]*=[[:space:]]*true([[:space:]]*(#.*)?)?$" /etc/rpm-ostreed.conf ; then
-        sudo bootc upgrade
-    else
-        rpm-ostree upgrade
-    fi
-    # rpm-ostree used due to bootc upgrade not supporting local layered packages
+
+    # less bad than shell script nightmare to do the whole bootc/rpm-ostree dance
+    pkexec uupd \
+      --hw-check=false \
+      --json \
+      --disable-module-flatpak \
+      --disable-module-brew \
+      --disable-module-distrobox \
+      | jq -r '[(.title, .msg, .description) | select(.)] | join(" ")'
+
     # Updates system Flatpaks
     if flatpak remotes | grep -q system; then
         flatpak update -y
