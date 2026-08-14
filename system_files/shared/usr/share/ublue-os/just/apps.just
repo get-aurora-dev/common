@@ -51,6 +51,8 @@ install-opentabletdriver:
 # Install applications from curated Brewfiles (includes full-desktop.Brewfile with GNOME Circle apps)
 bbrew:
     #!/usr/bin/env bash
+    set -eou pipefail
+    
     if ! command -v bbrew &>/dev/null ; then
         if gum confirm "Bold Brew is not installed, would you like to install it?" ; then
             brew install bbrew
