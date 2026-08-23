@@ -18,57 +18,8 @@ update:
         exit 1
     fi
 
-    if systemd-detect-virt --container -q; then
-      echo "Running inside a container environment, nothing to upgrade"
-      exit 1
-    elif grep -q -E "(^|\s)composefs=.*\S" /proc/cmdline; then
-      IS_COMPOSEFS="true"
-      IS_OSTREE="false"
-    elif grep -q -E "(^|\s)ostree=.*\S" /proc/cmdline; then
-      IS_COMPOSEFS="false"
-      IS_OSTREE="true"
-    else
-      echo "Not booted, nothing to upgrade."
-      exit 1
-    fi
-
-    if [[ "${IS_COMPOSEFS}" == "true" ]]; then
-        sudo bootc upgrade
-
-    elif [[ "${IS_OSTREE}" == "true" ]]; then
-      # Without password would be nice
-      # https://github.com/bootc-dev/bootc/issues/409
-      STATUS=$(sudo bootc status --json | jq ".status")
-
-      STAGED_INCOMPAT=$(echo "${STATUS}" | jq ".staged.incompatible")
-      BOOTED_INCOMPAT=$(echo "${STATUS}" | jq ".booted.incompatible")
-
-      if [[ "${STAGED_INCOMPAT}" == "true" || ( "${BOOTED_INCOMPAT}" == "true" && -z "${STAGED_INCOMPAT}" ) || "${BOOTED_INCOMPAT}" == "true" ]]; then
-          INCOMPAT="true"
-      else
-          INCOMPAT="false"
-      fi
-
-        if [[ "${INCOMPAT}" == "true" ]]; then
-            rpm-ostree upgrade
-        else
-            sudo bootc upgrade
-        fi
-    fi
-
-    # Updates system Flatpaks
-    if flatpak remotes | grep -q system; then
-        flatpak update -y
-    fi
-    # Update user Flatpaks
-    if flatpak remotes | grep -q user; then
-        flatpak update --user -y
-    fi
-    # Guard Brew if the user does not own brew/doesn't exist
-    if [[ -O /var/home/linuxbrew/.linuxbrew/bin/brew ]]; then
-        # Upgrade will run brew update if needed
-        /var/home/linuxbrew/.linuxbrew/bin/brew upgrade -y
-    fi
+    # Yes, this runs as the regular, uupd ships a polkit rule
+    systemctl start --verbose uupd-manual.service
 
 alias auto-update := toggle-updates
 
