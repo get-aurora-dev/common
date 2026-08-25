@@ -15,7 +15,7 @@ Don't forget to check the [release notes](https://github.com/ublue-os/aurora/rel
 Help keep Aurora alive and healthy, consider [donating](https://docs.getaurora.dev/project-docs/credits)
 KDE powers your desktop! Donate to [KDE](https://kde.org/donate)
 Like dinosaurs? `ujust toggle-dinosaurs`
-Support the app store! Donate to  [Bazaar](https://github.com/bazaar-org/bazaar)
+Support the app store! Donate to  [Bazaar](https://gitlab.gnome.org/World/bazaar/)
 Switch shells safely: change your shell in [Terminal settings instead of system-wide](https://tim.siosm.fr/blog/2023/12/22/dont-change-defaut-login-shell/)
 Container development is OS-agnostic - your devcontainers work on Linux, macOS, and Windows
 Check out `ujust bbrew` for curated selections of development and command line apps
