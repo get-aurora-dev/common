@@ -38,7 +38,7 @@ update:
     elif [[ "${IS_OSTREE}" == "true" ]]; then
       # Without password would be nice
       # https://github.com/bootc-dev/bootc/issues/409
-      STATUS=$(sudo bootc status --json | jq ".status")
+      STATUS=$(sudo bootc status --json | sed -n '/^{/,$p' | jq ".status")
 
       STAGED_INCOMPAT=$(echo "${STATUS}" | jq ".staged.incompatible")
       BOOTED_INCOMPAT=$(echo "${STATUS}" | jq ".booted.incompatible")
