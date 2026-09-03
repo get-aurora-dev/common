@@ -1,0 +1,8 @@
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.systemd1.manage-units") {
+        switch(action.lookup("unit")) {
+            case "bootc-status.service":
+                return polkit.Result.YES;
+        }
+    }
+})

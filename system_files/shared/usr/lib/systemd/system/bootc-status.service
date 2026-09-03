@@ -1,0 +1,7 @@
+[Unit]
+Description=bootc status
+Documentation=https://github.com/bootc-dev/bootc/issues/409
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bootc status --json
