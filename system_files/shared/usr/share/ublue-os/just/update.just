@@ -40,7 +40,7 @@ update:
       # https://github.com/bootc-dev/bootc/issues/409
       # https://github.com/get-aurora-dev/common/issues/270
       # bootc status can might prefix the output from `mount`
-      STATUS=$(sudo bootc status --json | sed -n '/^{/,$p' | jq ".status")
+      STATUS=$(sudo bootc status --json 2> /dev/null | jq ".status")
 
       STAGED_INCOMPAT=$(echo "${STATUS}" | jq ".staged.incompatible")
       BOOTED_INCOMPAT=$(echo "${STATUS}" | jq ".booted.incompatible")
