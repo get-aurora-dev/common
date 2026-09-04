@@ -1,5 +1,4 @@
 # Toggle Aurora staged deployment desktop notifications.
-
 [group('Aurora')]
 aurora-update-notifier action="status":
     #!/usr/bin/env bash
