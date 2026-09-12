@@ -3,7 +3,6 @@
 Shared OCI layer containing configuration files for https://github.com/ublue-os/aurora.
 
 This repo builds on top of:
-- https://github.com/ublue-os/aurorafin-shared
 - https://github.com/get-aurora-dev/branding
 - https://github.com/ublue-os/artwork
 
