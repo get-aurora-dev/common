@@ -21,7 +21,6 @@ Container development is OS-agnostic - your devcontainers work on Linux, macOS, 
 Check out `ujust bbrew` for curated selections of development and command line apps
 Open a folder with Clapgrep (Found in the Bazaar App Store) for super powerful search
 Aurora separates the OS from your development environment - embrace the cloud-native workflow
-Really love our wallpapers? Donate to [Chandeleer](https://ko-fi.com/chandeleer)
 `ujust jetbrains-toolbox` installs JetBrains tools in your home directory, all ready to go
 Save your installed Homebrew packages and Flatpaks(!) with `brew bundle dump`
 `ujust -n recipe_name` lets you preview a specific just recipe.
