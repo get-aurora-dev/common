@@ -267,27 +267,35 @@ configure-boot-to-windows:
     cp -r /usr/share/applications/dev.getaurora.boot-to-windows.desktop $HOME/.local/share/applications
     sed -i 's/Hidden=true/Hidden=false/' $HOME/.local/share/applications/dev.getaurora.boot-to-windows.desktop
 
-# Toggle IWD
+# Disable IWD (Deprecated)
 [group('System')]
 toggle-iwd:
     #!/usr/bin/bash
-    echo -e "This script disables IWD, in case it was enabled in the past, IWD was a replacement for wpa_supplicant for Wi-Fi networking."
+    echo -e "This script disables IWD, in case it was enabled in the past. IWD was a replacement for wpa_supplicant for Wi-Fi networking."
     echo -e "The upstream IWD project is not developed anymore."
     echo -e "This script will be removed in the future."
 
     get_current_status() {
-      if [[ -f "/etc/NetworkManager/conf.d/iwd.conf" ]]; then
+      if NetworkManager --print-config | grep -q '^wifi.backend=iwd'; then
         echo "Enabled"
       else
         echo "Disabled"
       fi
     }
     remove_saved_networks() {
-      nmcli -t -f NAME connection show | while read -r line; do sudo nmcli connection delete "$line"; done
+      nmcli -t -f UUID,TYPE connection show | awk -F: '$2 ~ /802-11-wireless/ {print $1}' | while read -r uuid; do
+        sudo nmcli connection delete "$uuid"
+      done
     }
     disable_iwd() {
       sudo rm -f "/etc/NetworkManager/conf.d/iwd.conf"
+      for f in /etc/NetworkManager/conf.d/*.conf; do
+        if [[ -f "$f" ]] && grep -qE '^\s*wifi\.backend\s*=\s*iwd' "$f"; then
+          sudo rm -f "$f"
+        fi
+      done
       remove_saved_networks
+      sudo systemctl disable --now aurora-iwd-deprecation-notifier.timer 2>/dev/null || true
       echo -e "IWD disabled. Reboot required to apply changes."
     }
     # Display current status
@@ -299,8 +307,8 @@ toggle-iwd:
       exit 0
     fi
 
-    echo -e "WARNING: Changing this will remove all saved (Wi-Fi) networks (including wired ethernet ones)."
-    echo -e "You will have to manually add networks back in the 'Wi-Fi & Networking' Tab"
+    echo -e "WARNING: Changing this will remove saved Wi-Fi networks."
+    echo -e "You will have to manually reconnect to Wi-Fi networks in the 'Wi-Fi & Networking' settings after reboot."
 
     # Prompt user for action
     CHOICE=$(gum choose "Disable IWD" "Exit without changes")
