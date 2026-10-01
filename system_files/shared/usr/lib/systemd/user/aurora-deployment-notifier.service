@@ -1,11 +1,8 @@
 [Unit]
 Description=Notify when an Aurora deployment is ready to boot
 Documentation=https://docs.getaurora.dev/
+After=graphical-session.target
 
 [Service]
 Type=oneshot
-RemainAfterExit=yes
 ExecStart=/usr/libexec/aurora-deployment-notifier
-
-[Install]
-WantedBy=default.target
