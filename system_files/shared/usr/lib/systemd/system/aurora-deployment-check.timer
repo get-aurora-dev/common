@@ -6,7 +6,7 @@ OnBootSec=5min
 OnUnitActiveSec=1h
 AccuracySec=5min
 Persistent=false
-Unit=aurora-deployment-check.service
+Unit=aurora-deployment@check.service
 
 [Install]
 WantedBy=timers.target

@@ -1,8 +1,0 @@
-[Unit]
-Description=Check for staged Aurora deployments
-Documentation=https://docs.getaurora.dev/
-After=uupd.service rpm-ostreed.service
-
-[Service]
-Type=oneshot
-ExecStart=/usr/libexec/aurora-deployment-check

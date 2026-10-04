@@ -4,7 +4,7 @@ Documentation=https://docs.getaurora.dev/
 
 [Path]
 PathExists=/run/aurora/staged-ready
-Unit=aurora-deployment-notifier.service
+Unit=aurora-deployment@notifier.service
 
 [Install]
 WantedBy=default.target
