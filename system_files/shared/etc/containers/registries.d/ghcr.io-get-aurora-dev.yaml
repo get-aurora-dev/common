@@ -1,0 +1,3 @@
+docker:
+  ghcr.io/get-aurora-dev:
+    use-sigstore-attachments: true
