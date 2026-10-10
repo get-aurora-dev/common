@@ -38,7 +38,7 @@ COPY --from=aurora-common /logos /tmp/logos
 
 ## Verify authenticity with cosign
 
-`cosign.pub` has been used in the past to sign artifacts, we are using keyless OIDC signing now.
+Images are dual-signed so they can be verified with the old sigstore bundle format as well as the keyless OIDC way.
 
 ```
 cosign verify \
