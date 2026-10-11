@@ -1,0 +1,7 @@
+[Unit]
+Description=Aurora staged deployment %i
+Documentation=https://docs.getaurora.dev/
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/aurora-deployment-%i
