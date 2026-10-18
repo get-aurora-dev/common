@@ -269,7 +269,7 @@ brew "k3d"
 brew "ko"
 
 # kpt
-brew "kptdev/kpt/kpt"
+brew "kpt"
 
 # kube-vip
 # brew "kube-vip" # In-cluster deployment
