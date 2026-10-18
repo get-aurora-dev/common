@@ -249,10 +249,6 @@ brew "porter"
 # Telepresence
 brew "telepresenceio/telepresence/telepresence-oss"
 
-# Tremor
-# Tremor
-brew "tremor-runtime"
-
 # WasmEdge Runtime
 brew "wasmedge"
 
