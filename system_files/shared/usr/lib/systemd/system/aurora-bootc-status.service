@@ -1,0 +1,7 @@
+[Unit]
+Description=Workaround bootc status needing root used in ujust update
+Documentation=https://github.com/bootc-dev/bootc/issues/409
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bootc status --json

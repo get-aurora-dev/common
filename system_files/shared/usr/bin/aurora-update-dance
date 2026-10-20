@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -eoux pipefail
+
+if systemd-detect-virt --container -q; then
+  echo "Running inside a container environment, nothing to upgrade"
+  exit 1
+elif grep -q -E "(^|\s)composefs=.*\S" /proc/cmdline; then
+  IS_COMPOSEFS="true"
+  IS_OSTREE="false"
+elif grep -q -E "(^|\s)ostree=.*\S" /proc/cmdline; then
+  IS_COMPOSEFS="false"
+  IS_OSTREE="true"
+else
+  echo "Not booted, nothing to upgrade."
+  exit 1
+fi
+
+if [[ "${IS_COMPOSEFS}" == "true" ]]; then
+  systemctl start --verbose aurora-bootc-upgrade.service | grep --color=never -o '{.*}'
+
+elif [[ "${IS_OSTREE}" == "true" ]]; then
+  # bootc status might prefix the output from `mount` under certain circumstances
+  # https://github.com/get-aurora-dev/common/issues/270
+
+  # nasty workaround for: https://github.com/bootc-dev/bootc/issues/409
+  # this has a polkit rule, this should run without asking for password
+  STATUS=$(systemctl start --verbose aurora-bootc-status.service | grep --color=never -o '{.*}')
+
+  STAGED_INCOMPAT=$(echo "${STATUS}" | jq ".staged.incompatible")
+  BOOTED_INCOMPAT=$(echo "${STATUS}" | jq ".booted.incompatible")
+
+  if [[ "${STAGED_INCOMPAT}" == "true" || ( "${BOOTED_INCOMPAT}" == "true" && -z "${STAGED_INCOMPAT}" ) || "${BOOTED_INCOMPAT}" == "true" ]]; then
+      INCOMPAT="true"
+  else
+      INCOMPAT="false"
+  fi
+
+    if [[ "${INCOMPAT}" == "true" ]]; then
+        rpm-ostree upgrade
+    else
+        systemctl start --verbose aurora-bootc-upgrade.service
+    fi
+fi
+
+

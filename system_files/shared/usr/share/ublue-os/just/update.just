@@ -6,7 +6,11 @@ alias upgrade := update
 update:
     #!/usr/bin/env bash
 
-    set -eou pipefail
+    set -eoux pipefail
+    if [ "$EUID" -eq 0 ]; then
+      echo "This script should not be run as root/with sudo."
+      exit 1
+    fi
 
     if systemctl cat -- uupd.timer &> /dev/null; then
         SERVICE="uupd.service"
@@ -18,45 +22,7 @@ update:
         exit 1
     fi
 
-    if systemd-detect-virt --container -q; then
-      echo "Running inside a container environment, nothing to upgrade"
-      exit 1
-    elif grep -q -E "(^|\s)composefs=.*\S" /proc/cmdline; then
-      IS_COMPOSEFS="true"
-      IS_OSTREE="false"
-    elif grep -q -E "(^|\s)ostree=.*\S" /proc/cmdline; then
-      IS_COMPOSEFS="false"
-      IS_OSTREE="true"
-    else
-      echo "Not booted, nothing to upgrade."
-      exit 1
-    fi
-
-    if [[ "${IS_COMPOSEFS}" == "true" ]]; then
-        sudo bootc upgrade
-
-    elif [[ "${IS_OSTREE}" == "true" ]]; then
-      # Without password would be nice
-      # https://github.com/bootc-dev/bootc/issues/409
-      # https://github.com/get-aurora-dev/common/issues/270
-      # bootc status can might prefix the output from `mount`
-      STATUS=$(sudo bootc status --json 2> /dev/null | jq ".status")
-
-      STAGED_INCOMPAT=$(echo "${STATUS}" | jq ".staged.incompatible")
-      BOOTED_INCOMPAT=$(echo "${STATUS}" | jq ".booted.incompatible")
-
-      if [[ "${STAGED_INCOMPAT}" == "true" || ( "${BOOTED_INCOMPAT}" == "true" && -z "${STAGED_INCOMPAT}" ) || "${BOOTED_INCOMPAT}" == "true" ]]; then
-          INCOMPAT="true"
-      else
-          INCOMPAT="false"
-      fi
-
-        if [[ "${INCOMPAT}" == "true" ]]; then
-            rpm-ostree upgrade
-        else
-            sudo bootc upgrade
-        fi
-    fi
+    aurora-update-dance
 
     # Updates system Flatpaks
     if flatpak remotes | grep -q system; then
