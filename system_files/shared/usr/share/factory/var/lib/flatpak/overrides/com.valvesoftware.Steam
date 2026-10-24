@@ -1,0 +1,7 @@
+# https://linux.kde.org/docs/cjkv-input/#fixing-compatibility-issues
+# https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
+# https://github.com/ublue-os/aurora/issues/3038
+[Environment]
+GTK_IM_MODULE=xim
+QT_IM_MODULE=xim
+QT_IM_MODULES=wayland;fcitx;ibus

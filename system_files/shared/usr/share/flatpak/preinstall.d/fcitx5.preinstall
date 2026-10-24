@@ -1,0 +1,24 @@
+# part of https://github.com/ublue-os/aurora/issues/3038
+[Flatpak Preinstall org.fcitx.Fcitx5]
+Branch=stable
+IsRuntime=false
+
+[Flatpak Preinstall org.fcitx.Fcitx5.Addon.Chewing]
+Branch=stable
+IsRuntime=true
+
+[Flatpak Preinstall org.fcitx.Fcitx5.Addon.ChineseAddons]
+Branch=stable
+IsRuntime=true
+
+[Flatpak Preinstall org.fcitx.Fcitx5.Addon.Hangul]
+Branch=stable
+IsRuntime=true
+
+[Flatpak Preinstall org.fcitx.Fcitx5.Addon.Mozc]
+Branch=stable
+IsRuntime=true
+
+[Flatpak Preinstall org.fcitx.Fcitx5.Addon.Unikey]
+Branch=stable
+IsRuntime=true

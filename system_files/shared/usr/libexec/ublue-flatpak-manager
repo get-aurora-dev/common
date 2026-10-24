@@ -1,7 +1,9 @@
 #!/usr/bin/bash
 
+set -eou pipefail
+
 # Script Version
-VER=2
+VER=3
 LOCAL_UBLUE_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}/ublue"
 VER_FILE="${LOCAL_UBLUE_DIR}/flatpak_manager_version"
 VER_RAN=$(cat "$VER_FILE")
@@ -21,6 +23,32 @@ fi
 mkdir -p /var/lib/flatpak/extension/org.mozilla.firefox.systemconfig/$(arch)/stable/defaults/pref
 rm -f /var/lib/flatpak/extension/org.mozilla.firefox.systemconfig/$(arch)/stable/defaults/pref/*aurora*.js
 /usr/bin/cp -rf /usr/share/ublue-os/firefox-config/* /var/lib/flatpak/extension/org.mozilla.firefox.systemconfig/$(arch)/stable/defaults/pref/
+
+
+# https://github.com/ublue-os/aurora/issues/3038
+migrate_fcitx() {
+  ID="org.fcitx.Fcitx5"
+  FCITX_CONFIG_DIR="${HOME}/.config/fcitx5"
+  FCITX_DATA_DIR="${HOME}/.local/share/fcitx5"
+
+  FCITX_FLATPAK="${HOME}/.var/app/${ID}/"
+  FCITX_DATA_DIR_FLATPAK="${FCITX_FLATPAK}/data"
+  FCITX_CONFIG_DIR_FLATPAK="${FCITX_FLATPAK}/config"
+
+  # don't overwrite/do anything if user already has flatpak fcitx for whatever reason
+  if [[ ! -f "${LOCAL_UBLUE_DIR}/fcitx5-flatpak-migration" ]] && [[ -d "/var/lib/flatpak/app/${ID}" ]]  && [[ ! -d "${FCITX_CONFIG_DIR_FLATPAK}" ]]; then
+    if [[ -d "${FCITX_CONFIG_DIR}" ]]; then
+      cp -r "${FCITX_CONFIG_DIR}" "${FCITX_CONFIG_DIR_FLATPAK}"
+    fi
+
+    if [[ -d "${FCITX_DATA_DIR}" ]] && [[ -n "$(ls -A "${FCITX_DATA_DIR}" 2>/dev/null)" ]]; then
+      cp -r "${FCITX_DATA_DIR}" "${FCITX_DATA_DIR_FLATPAK}"
+    fi
+    touch "${LOCAL_UBLUE_DIR}/fcitx5-flatpak-migration"
+  fi
+}
+
+migrate_fcitx
 
 # Use until yafti rework is done
 flatpak --system update -y
