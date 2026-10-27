@@ -104,13 +104,9 @@ JUST_COMPLETE=bash just | sed -E 's/just/ujust/g' > /out/system_files/shared/usr
 EOF
 
 RUN <<EOF
-# FIXME: Renovate
-curl -fsSLo - https://codeberg.org/fabiscafe/game-devices-udev/archive/1.0.tar.gz | tar xzvf - -C tmp/
-for f in tmp/game-devices-udev/src/*.rules; do
-  install -Dpm0644 "$f" "out/system_files/shared/usr/lib/udev/rules.d/71-${f##*/}";
-done
 curl -fsSLo /out/system_files/shared/usr/lib/udev/rules.d/70-u2f.rules https://raw.githubusercontent.com/Yubico/libfido2/refs/heads/main/udev/70-u2f.rules
 EOF
+
 
 FROM scratch AS ctx
 COPY system_files/nvidia /system_files/nvidia
