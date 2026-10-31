@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/bin/xdg-open https://docs.getaurora.dev/blog
+Icon=placeholder
+Name=Aurora News and Blog
+Name[de]=Aurora Neuigkeiten und Blog
+Comment=Stay up-to-date
+Comment[de]=Bleiben Sie auf dem neuesten Stand
+Categories=Utility;
+Keywords=Help;Announcements;News;Updates;
+Keywords[de]=Hilfe;Ankündigungen;Neuigkeiten;Aktualisierungen;
