@@ -9,7 +9,5 @@ Icon=distributor-logo
 Terminal=false
 Categories=Documentation;System;
 Keywords=aurora;docs;manual;guide;pdf;help;tutorial;
-StartupNotify=true
-NoDisplay=false
 OnlyShowIn=KDE;
 X-KDE-Shortcuts=Meta+F1
