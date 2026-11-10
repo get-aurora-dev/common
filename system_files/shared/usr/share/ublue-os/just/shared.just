@@ -5,6 +5,11 @@
 toggle-tpm2:
     @/usr/bin/luks-tpm2-autounlock
 
+# Toggle LUKS performance optimization for NVMe drives
+[group('System')]
+toggle-nvme-luks-perf ACTION="":
+    @/usr/bin/luks-nvme-perf {{ ACTION }}
+
 # Factory reset this device (experimental)
 [group('System')]
 powerwash:

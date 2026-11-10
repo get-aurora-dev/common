@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ACTION="${1:-}"
+
+get_luks2_nvme_targets() {
+	for dm in /sys/block/dm-*; do
+		[[ -d "$dm" ]] || continue
+		local uuid name
+		uuid=$(cat "$dm/dm/uuid" 2>/dev/null || true)
+		name=$(cat "$dm/dm/name" 2>/dev/null || true)
+		[[ "$uuid" =~ ^CRYPT-LUKS2- && -n "$name" ]] || continue
+		if lsblk -s "/dev/mapper/$name" -o TRAN,NAME 2>/dev/null | grep -qiE "nvme"; then
+			echo "$name"
+		fi
+	done
+}
+
+apply_perf() {
+	local enable="$1"
+	local targets
+	targets=$(get_luks2_nvme_targets)
+	if [[ -z "$targets" ]]; then
+		echo "No active NVMe LUKS2 devices found."
+		return 0
+	fi
+
+	for dev in $targets; do
+		local table
+		table=$(sudo dmsetup table "$dev" 2>/dev/null || true)
+		if [[ -z "$table" ]]; then
+			echo "Warning: Unable to read table for $dev, skipping to prevent flag loss." >&2
+			continue
+		fi
+
+		local args=("--persistent")
+		[[ "$table" =~ "allow_discards" ]] && args+=("--allow-discards")
+		[[ "$table" =~ "same_cpu_crypt" ]] && args+=("--perf-same_cpu_crypt")
+		[[ "$table" =~ "submit_from_crypt_cpus" ]] && args+=("--perf-submit_from_crypt_cpus")
+		[[ "$table" =~ "no_journal" ]] && args+=("--integrity-no-journal")
+
+		if [[ "$enable" == "true" ]]; then
+			if [[ "$table" =~ "no_read_workqueue" && "$table" =~ "no_write_workqueue" ]]; then
+				echo "Workqueue bypass already enabled on $dev, skipping."
+				continue
+			fi
+			args+=("--perf-no_read_workqueue" "--perf-no_write_workqueue")
+			echo "Enabling workqueue bypass on $dev..."
+			sudo cryptsetup refresh "${args[@]}" "$dev"
+		else
+			if [[ ! "$table" =~ "no_read_workqueue" && ! "$table" =~ "no_write_workqueue" ]]; then
+				echo "Workqueue bypass already disabled on $dev, skipping."
+				continue
+			fi
+			echo "Reverting workqueue bypass on $dev..."
+			sudo cryptsetup refresh "${args[@]}" "$dev"
+		fi
+	done
+}
+
+print_status() {
+	echo "NVMe LUKS2 Performance Optimization Status:"
+	echo ""
+	local targets
+	targets=$(get_luks2_nvme_targets)
+	if [[ -z "$targets" ]]; then
+		echo "  No active NVMe LUKS2 devices found."
+		return 0
+	fi
+	for dev in $targets; do
+		local table
+		table=$(sudo -n dmsetup table "$dev" 2>/dev/null || true)
+		if [[ -n "$table" ]]; then
+			if [[ "$table" =~ "no_read_workqueue" && "$table" =~ "no_write_workqueue" ]]; then
+				echo "  - $dev: Enabled (workqueue bypass active)"
+			else
+				echo "  - $dev: Disabled (standard kernel workqueue active)"
+			fi
+		else
+			echo "  - $dev (run with sudo to view workqueue status)"
+		fi
+	done
+}
+
+case "${ACTION,,}" in
+	enable)
+		apply_perf true
+		echo "NVMe LUKS performance optimization enabled."
+		;;
+	disable)
+		apply_perf false
+		echo "NVMe LUKS performance optimization disabled."
+		;;
+	status)
+		print_status
+		;;
+	exit)
+		exit 0
+		;;
+	*)
+		print_status
+		echo ""
+		if command -v gum &>/dev/null; then
+			CHOICE=$(gum choose "enable" "disable" "status" "exit")
+		else
+			read -rp "Choose action [enable/disable/status/exit]: " CHOICE
+		fi
+		if [[ -n "$CHOICE" && "$CHOICE" != "exit" ]]; then
+			exec "$0" "$CHOICE"
+		fi
+		;;
+esac
