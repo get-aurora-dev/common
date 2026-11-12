@@ -3,3 +3,6 @@ yaml-blocklist-paths:
 
 curated-config-paths:
   - /run/host/etc/bazaar/curated.yaml
+
+# We already have background updates via uupd
+hide-auto-update-options: true
