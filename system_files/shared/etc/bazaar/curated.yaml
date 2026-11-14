@@ -39,15 +39,19 @@ rows:
       title: "Games"
       subtitle:
         string: |
-          "Hey, you’re finally awake."
-      overflow-count: 4
+          "Oh hey, you’re finally awake."
+      overflow-count: 8
       list-type: rich
       appids:
         list:
           - com.valvesoftware.Steam
           - org.prismlauncher.PrismLauncher
           - com.heroicgameslauncher.hgl
+          - com.epicgames.launcher
+          - dev.eden_emu.eden
           - io.github.Faugus.faugus-launcher
+          - net.lutris.Lutris
+          - net.pcsx2.PCSX2
           - app.xemu.xemu
           - io.github.radiolamp.mangojuice
           - at.vintagestory.VintageStory
@@ -75,8 +79,6 @@ rows:
           - net.davidotek.pupgui2
           - net.hhoney.rota
           - net.kuribo64.melonDS
-          - net.lutris.Lutris
-          - net.pcsx2.PCSX2
           - net.retrodeck.retrodeck
           - net.rpcs3.RPCS3
           - net.stabyourself.nottetris2
