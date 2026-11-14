@@ -1,6 +1,7 @@
 # For the rationale about what is included in this list, see https://github.com/ublue-os/aurora/issues/786
 blocklists:
   - block:
+    # these should be used from brew they are broken or is a subpar experience in flatpak
     - com.google.AndroidStudio
     - com.helix_editor.Helix
     - com.jetbrains.CLion
@@ -19,12 +20,13 @@ blocklists:
     - com.visualstudio.code-oss
     - com.vscodium.codium
     - com.vscodium.codium-insiders
-    - dev.lizardbyte.app.Sunshine
-    - io.github.kolunmi.Bazaar
+    - dev.zed.Zed
     - io.github.zyedidia.micro
     - io.neovim.nvim
-    - org.freedesktop.fwupd
     - org.gnu.emacs
+    - org.vim.Vim
+
+    # preisntalled on the image
     - org.kde.ark
     - org.kde.dolphin
     - org.kde.filelight
@@ -33,5 +35,8 @@ blocklists:
     - org.kde.konsole
     - org.kde.kwalletmanager
     - org.kde.kwalletmanager5
-    - org.vim.Vim
-    - dev.zed.Zed
+
+    # weird, on the image anyway
+    - org.freedesktop.fwupd
+    # why do we have this on the image again
+    - dev.lizardbyte.app.Sunshine

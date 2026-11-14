@@ -1,0 +1,13 @@
+# for rationale of this: https://github.com/get-aurora-dev/common/issues/290
+# This file needs to be updated according to
+# https://endoflife.date/freedesktop-sdk, remove sections when EOL
+# Everything that enables hardware features goes here
+
+# Start 25.08
+# fix intel hardware acceleration in firefox explicitly, if firefox upgrades runtime then bump this here as well
+[Flatpak Preinstall org.freedesktop.Platform.VAAPI.Intel]
+Branch=25.08
+IsRuntime=true
+
+# FIXME: figure out a way to install multiple versions of a runtime extension
+# https://github.com/flatpak/flatpak/issues/6927

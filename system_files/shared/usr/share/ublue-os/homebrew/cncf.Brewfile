@@ -249,10 +249,6 @@ brew "porter"
 # Telepresence
 brew "telepresenceio/telepresence/telepresence-oss"
 
-# Tremor
-# Tremor
-brew "tremor-runtime"
-
 # WasmEdge Runtime
 brew "wasmedge"
 
@@ -269,7 +265,7 @@ brew "k3d"
 brew "ko"
 
 # kpt
-brew "kptdev/kpt/kpt"
+brew "kpt"
 
 # kube-vip
 # brew "kube-vip" # In-cluster deployment

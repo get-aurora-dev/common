@@ -28,7 +28,7 @@ EOF
 RUN <<EOF
 set -xeuo pipefail
 
-REV=4
+REV=6
 ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}"/contents/images/3840x2160.jxl /out/wallpapers/usr/share/backgrounds/default.jxl
 ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}"/contents/images/3840x2160.jxl /out/wallpapers/usr/share/backgrounds/default-dark.jxl
 ln -sr /out/wallpapers/usr/share/backgrounds/aurora/aurora-wallpaper-"${REV}" /out/wallpapers/usr/share/wallpapers/Aurora
@@ -53,12 +53,13 @@ cp \
 cp /logos/aurora-banner.svg /out/logos/usr/share/pixmaps/
 ln -sr /out/logos/usr/share/pixmaps/aurora-banner.svg /out/logos/usr/share/pixmaps/fedora-logo.svg
 
-magick -background none /logos/aurora-banner.svg -quality 90 -resize $((400-10*2))x100 -gravity center -extent 400x100 /out/logos/usr/share/pixmaps/fedora-logo.png
-magick -background none /logos/aurora-banner.svg -quality 90 -resize $((128-3*2))x32 -gravity center -extent 128x32 /out/logos/usr/share/pixmaps/fedora-logo-small.png
-magick -background none /logos/aurora-banner.svg -quality 90 -resize $((200-5*2))x50 -gravity center -extent 200x100 /out/logos/usr/share/pixmaps/fedora_logo_med.png
-magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! /out/logos/usr/share/pixmaps/system-logo.png
-magick -background none /logos/distributor-logo.svg -quality 90 -resize 128x128! /out/logos/usr/share/pixmaps/fedora-logo-sprite.png
-magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! /out/logos/usr/share/pixmaps/system-logo-white.png
+# FIXME; make a wrapper/config?, -strip needs to be at the end
+magick -background none /logos/aurora-banner.svg -quality 90 -resize $((400-10*2))x100 -gravity center -extent 400x100 -strip /out/logos/usr/share/pixmaps/fedora-logo.png
+magick -background none /logos/aurora-banner.svg -quality 90 -resize $((128-3*2))x32 -gravity center -extent 128x32 -strip /out/logos/usr/share/pixmaps/fedora-logo-small.png
+magick -background none /logos/aurora-banner.svg -quality 90 -resize $((200-5*2))x50 -gravity center -extent 200x100 -strip /out/logos/usr/share/pixmaps/fedora_logo_med.png
+magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! -strip /out/logos/usr/share/pixmaps/system-logo.png
+magick -background none /logos/distributor-logo.svg -quality 90 -resize 128x128! -strip /out/logos/usr/share/pixmaps/fedora-logo-sprite.png
+magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! -strip /out/logos/usr/share/pixmaps/system-logo-white.png
 
 ln -sr /out/logos/usr/share/pixmaps/aurora-banner.svg /out/logos/usr/share/pixmaps/fedora_whitelogo.svg
 ln -sr /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg /out/logos/usr/share/pixmaps/fedora-logo-sprite.svg
@@ -104,13 +105,9 @@ JUST_COMPLETE=bash just | sed -E 's/just/ujust/g' > /out/system_files/shared/usr
 EOF
 
 RUN <<EOF
-# FIXME: Renovate
-curl -fsSLo - https://codeberg.org/fabiscafe/game-devices-udev/archive/1.0.tar.gz | tar xzvf - -C tmp/
-for f in tmp/game-devices-udev/src/*.rules; do
-  install -Dpm0644 "$f" "out/system_files/shared/usr/lib/udev/rules.d/71-${f##*/}";
-done
 curl -fsSLo /out/system_files/shared/usr/lib/udev/rules.d/70-u2f.rules https://raw.githubusercontent.com/Yubico/libfido2/refs/heads/main/udev/70-u2f.rules
 EOF
+
 
 FROM scratch AS ctx
 COPY system_files/nvidia /system_files/nvidia
