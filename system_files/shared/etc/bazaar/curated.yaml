@@ -25,6 +25,7 @@ rows:
       list-type: rich
       appids:
         list:
+          - io.github.Micro856.KittiesGtk
           - io.github.vani_tty1.memerist
           - io.github.halfmexican.Mingle
           - com.github.PintaProject.Pinta
