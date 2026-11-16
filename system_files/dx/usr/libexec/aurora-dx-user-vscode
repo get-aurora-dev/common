@@ -19,7 +19,7 @@ fi
 
 # Run script if updated
 if [[ -f $USER_SETUP_VER_FILE && "$USER_SETUP_VER" = "$USER_SETUP_VER_RAN" ]]; then
-  echo "User setup v$VER has already run. Exiting..."
+  echo "User setup v$USER_SETUP_VER has already run. Exiting..."
   exit 0
 fi
 
