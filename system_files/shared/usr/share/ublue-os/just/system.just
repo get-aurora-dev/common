@@ -183,6 +183,8 @@ toggle-tailscale:
             systemctl enable --now tailscaled
             TAILSCALED_STATUS="$(systemctl is-enabled tailscaled || true )"
             if [ "$TAILSCALED_STATUS" == "enabled" ]; then
+                # Allow the current user to manage tailscale without sudo
+                pkexec tailscale set --operator="$USER" || true
                 echo "Tailscale is enabled."
                 echo "If this is your first time using Tailscale, setup is necessary."
                 echo "Refer to Tailscale's documentation at https://tailscale.com/kb/1346/start."
