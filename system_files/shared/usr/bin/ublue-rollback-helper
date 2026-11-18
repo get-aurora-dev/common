@@ -8,11 +8,34 @@ IMAGE_REGISTRY="ghcr.io/${IMAGE_VENDOR}"
 
 set -euo pipefail
 
+# When there is only one build for day, only show the non-suffix tag. If multiple builds the tags are listed
 function list_tags() {
   local filter="$1"
   skopeo list-tags "docker://${IMAGE_REGISTRY}/${IMAGE_NAME}" \
     | jq -r '.Tags[]' \
     | grep -E --color=never "$filter" \
+    | awk '
+        {
+          base = $0
+          if (match($0, /\.[0-9]+$/)) {
+            base = substr($0, 1, RSTART - 1)
+            builds[base]++
+            suffixed[base] = suffixed[base] " " $0
+          } else {
+            plain[base] = 1
+          }
+          bases[base] = 1
+        }
+        END {
+          for (b in bases) {
+            if (builds[b] > 1 || !(b in plain)) {
+              n = split(suffixed[b], tags, " ")
+              for (i = 1; i <= n; i++) print tags[i]
+            } else {
+              print b
+            }
+          }
+        }' \
     | sort -rV | head -n 31
 }
 
