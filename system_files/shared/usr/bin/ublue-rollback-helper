@@ -33,7 +33,14 @@ channel_selected=${channel_choice%% *}
 
 rebase_target="${base_image}:${channel_selected}"
 
-if gum confirm --default=no "Would you like to pin to a specific build date?" ; then
+PIN_MSG="Would you like to pin to a specific build date?
+This is useful in case you run into issues and may want to use an older build of Aurora temporarily.
+
+Check out https://github.com/ublue-os/aurora/releases for changes.
+
+Note: As long as you are on a pinned tag you will no longer receive any Aurora system updates."
+
+if gum confirm --default=no "${PIN_MSG}"; then
   echo "Fetching available tags for channel: $channel_selected..."
   filter="${channel_selected}.[0-9]{8}"
   valid_tags=( $(list_tags "$filter") )
