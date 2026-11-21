@@ -41,7 +41,7 @@
     },
     {
       matchDepNames: [
-        'quay.io/fedora/fedora:latest',
+        'quay.io/fedora/fedora',
       ],
       pinDigests: false,
     },
