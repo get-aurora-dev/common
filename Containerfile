@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora:latest@sha256:f236063d5a7a15e76ff034f2be5fa6f7a8922fcb655093ad972a1f196b14a007 AS builder
+FROM quay.io/fedora/fedora:latest@sha256:7b6d9048825950573e58b7185631f6bd38f7c24f5c0e68ae902870aedebb86e0 AS builder
 
 RUN --mount=type=cache,dst=/var/cache/libdnf5 \
   dnf config-manager setopt keepcache=1 && dnf -y --setopt install_weak_deps=false install jq ImageMagick rsvg-convert just
