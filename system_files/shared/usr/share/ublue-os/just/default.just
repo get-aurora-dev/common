@@ -52,7 +52,11 @@ clean-system:
     fi
 
     flatpak uninstall --unused
-    rpm-ostree cleanup -bm
+
+    if [[ -f /run/ostree-booted ]]; then
+      rpm-ostree cleanup -bm
+    fi
+
     if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
         brew autoremove
         brew cleanup

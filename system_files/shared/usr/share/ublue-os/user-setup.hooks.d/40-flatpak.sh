@@ -3,7 +3,7 @@
 set -euo pipefail
 
 source /usr/lib/ublue/setup-services/libsetup.sh
-version-script aurora-flatpak user 2 || exit 0
+version-script aurora-flatpak user 3 || exit 0
 
 # https://github.com/ublue-os/aurora/issues/3038
 migrate_fcitx() {
@@ -56,3 +56,4 @@ migrate_fcitx
 
 # More consistent Qt/GTK themes for Flatpaks
 flatpak override --user --filesystem=xdg-config/gtk-4.0:ro
+flatpak override --user --filesystem=xdg-config/gtk-3.0:ro

@@ -41,7 +41,7 @@
     },
     {
       matchDepNames: [
-        'docker.io/library/alpine',
+        'quay.io/fedora/fedora:latest',
       ],
       pinDigests: false,
     },

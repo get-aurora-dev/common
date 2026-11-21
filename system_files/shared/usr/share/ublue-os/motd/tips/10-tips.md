@@ -27,3 +27,4 @@ Save your installed Homebrew packages and Flatpaks(!) with `brew bundle dump`
 Want to help out with testing Aurora? Use `ujust rebase-helper` to switch to the testing channel
 A Flatpak application broke? Use Warehouse to downgrade to a working version.
 `ujust` is powered by [just](https://just.systems)
+`ujust check-anticheat` will check your system against Epic Games EACv2 requirements
