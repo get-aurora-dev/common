@@ -53,7 +53,3 @@ migrate_fcitx() {
 }
 
 migrate_fcitx
-
-# More consistent Qt/GTK themes for Flatpaks
-flatpak override --user --filesystem=xdg-config/gtk-4.0:ro
-flatpak override --user --filesystem=xdg-config/gtk-3.0:ro
