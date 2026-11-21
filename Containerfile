@@ -1,6 +1,7 @@
-FROM docker.io/library/alpine:latest AS builder
+FROM quay.io/fedora/fedora:latest AS builder
 
-RUN apk add --no-cache curl jq zstd tar coreutils imagemagick rsvg-convert just
+RUN --mount=type=cache,dst=/var/cache/libdnf5 \
+  dnf config-manager setopt keepcache=1 && dnf -y --setopt install_weak_deps=false install jq ImageMagick rsvg-convert just
 
 COPY --from=ghcr.io/ublue-os/aurora-wallpapers:latest@sha256:270b3b10cd6fd54e322407275e24b86655c2472738186b1a825786ce26d4ce50 / /wallpapers
 
@@ -53,13 +54,14 @@ cp \
 cp /logos/aurora-banner.svg /out/logos/usr/share/pixmaps/
 ln -sr /out/logos/usr/share/pixmaps/aurora-banner.svg /out/logos/usr/share/pixmaps/fedora-logo.svg
 
-# FIXME; make a wrapper/config?, -strip needs to be at the end
-magick -background none /logos/aurora-banner.svg -quality 90 -resize $((400-10*2))x100 -gravity center -extent 400x100 -strip /out/logos/usr/share/pixmaps/fedora-logo.png
-magick -background none /logos/aurora-banner.svg -quality 90 -resize $((128-3*2))x32 -gravity center -extent 128x32 -strip /out/logos/usr/share/pixmaps/fedora-logo-small.png
-magick -background none /logos/aurora-banner.svg -quality 90 -resize $((200-5*2))x50 -gravity center -extent 200x100 -strip /out/logos/usr/share/pixmaps/fedora_logo_med.png
-magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! -strip /out/logos/usr/share/pixmaps/system-logo.png
-magick -background none /logos/distributor-logo.svg -quality 90 -resize 128x128! -strip /out/logos/usr/share/pixmaps/fedora-logo-sprite.png
-magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! -strip /out/logos/usr/share/pixmaps/system-logo-white.png
+REPRO_FLAGS=("-define" "png:exclude-chunk=date,time")
+
+magick -background none /logos/aurora-banner.svg -quality 90 -resize $((400-10*2))x100 -gravity center -extent 400x100 "${REPRO_FLAGS[@]}" /out/logos/usr/share/pixmaps/fedora-logo.png
+magick -background none /logos/aurora-banner.svg -quality 90 -resize $((128-3*2))x32 -gravity center -extent 128x32 "${REPRO_FLAGS[@]}" /out/logos/usr/share/pixmaps/fedora-logo-small.png
+magick -background none /logos/aurora-banner.svg -quality 90 -resize $((200-5*2))x50 -gravity center -extent 200x100 "${REPRO_FLAGS[@]}" /out/logos/usr/share/pixmaps/fedora_logo_med.png
+magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! "${REPRO_FLAGS[@]}" /out/logos/usr/share/pixmaps/system-logo.png
+magick -background none /logos/distributor-logo.svg -quality 90 -resize 128x128! "${REPRO_FLAGS[@]}" /out/logos/usr/share/pixmaps/fedora-logo-sprite.png
+magick -background none /logos/distributor-logo.svg -quality 90 -resize 256x256! "${REPRO_FLAGS[@]}" /out/logos/usr/share/pixmaps/system-logo-white.png
 
 ln -sr /out/logos/usr/share/pixmaps/aurora-banner.svg /out/logos/usr/share/pixmaps/fedora_whitelogo.svg
 ln -sr /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg /out/logos/usr/share/pixmaps/fedora-logo-sprite.svg
@@ -78,7 +80,7 @@ mkdir -p /out/logos/usr/share/plymouth/themes/spinner/
 magick -background none /out/logos/usr/share/pixmaps/aurora-banner.svg -quality 90 -resize $((128-3*2))x32 -gravity center -extent 128x32 /out/logos/usr/share/plymouth/themes/spinner/watermark.png
 cp /out/logos/usr/share/plymouth/themes/spinner/watermark.png /out/logos/usr/share/plymouth/themes/spinner/kinoite-watermark.png
 mkdir -p /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/
-gzip -c /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg > /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/aurora_logo.svgz
+gzip -n -c /out/logos/usr/share/icons/hicolor/scalable/distributor-logo.svg > /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/aurora_logo.svgz
 curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/busywidget.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/busywidget.svgz
 curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/kde.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/kde.svgz
 curl -Lo /out/logos/usr/share/plasma/look-and-feel/dev.getaurora.aurora.desktop/contents/splash/images/plasma.svgz https://invent.kde.org/plasma/plasma-workspace/-/raw/d3b5a422e586ee578efadfe462d0d0b5546aaa3b/lookandfeel/org.kde.breeze/contents/splash/images/plasma.svgz
