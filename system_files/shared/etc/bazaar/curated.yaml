@@ -50,6 +50,7 @@ rows:
           - com.heroicgameslauncher.hgl
           - com.epicgames.launcher
           - dev.eden_emu.eden
+          - org.azahar_emu.Azahar
           - io.github.Faugus.faugus-launcher
           - net.lutris.Lutris
           - net.pcsx2.PCSX2
