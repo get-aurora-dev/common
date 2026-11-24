@@ -6,3 +6,4 @@ pref("media.hardware-video-decoding.force-enabled", true);
 pref("middlemouse.paste", false);
 // TODO: investigate if this is enabled by default in the future
 pref("widget.use-xdg-desktop-portal.native-messaging-proxy", 2);
+pref("media.webrtc.camera.allow-pipewire", true);
