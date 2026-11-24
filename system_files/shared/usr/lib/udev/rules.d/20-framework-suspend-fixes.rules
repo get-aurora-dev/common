@@ -1,0 +1,3 @@
+# Framework Laptop 13 (AMD Ryzen 7040): keyboard wakes the laptop from suspend on BIOS < 3.09
+# https://knowledgebase.frame.work/framework-laptop-13-bios-and-driver-releases-amd-ryzen-7040-series-r1rXGVL16
+ACTION=="add", SUBSYSTEM=="serio", DRIVERS=="atkbd", ATTR{[dmi/id]chassis_vendor}=="Framework", ATTR{[dmi/id]product_name}=="Laptop 13 (AMD Ryzen 7040Series)", ATTR{[dmi/id]bios_version}=="03.0[0-8]", ATTR{power/wakeup}="disabled"
