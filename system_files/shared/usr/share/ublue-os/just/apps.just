@@ -65,15 +65,3 @@ bbrew:
     BREWFILE="/usr/share/ublue-os/homebrew/${CHOSEN}.Brewfile"
     /usr/libexec/ublue-brew-trust-brewfile "$BREWFILE"
     bbrew -f "$BREWFILE"
-
-cncf:
-    #!/usr/bin/env bash
-    if ! command -v bbrew &>/dev/null ; then
-        if gum confirm "Bold Brew is not installed, would you like to install it?" ; then
-            brew install bbrew
-        else
-            exit 0
-        fi
-    fi
-    /usr/libexec/ublue-brew-trust-brewfile "/usr/share/ublue-os/homebrew/cncf.Brewfile"
-    bbrew -f "/usr/share/ublue-os/homebrew/cncf.Brewfile"
