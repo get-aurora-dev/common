@@ -2,3 +2,4 @@
 flatpak "io.podman_desktop.PodmanDesktop"
 flatpak "io.github.getnf.embellish"
 flatpak "me.iepure.devtoolbox"
+flatpak "org.kde.kate"
