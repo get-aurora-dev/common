@@ -194,6 +194,7 @@ rows:
           - io.github.pwr_solaar.solaar
           - com.infinipaint.infinipaint
           - org.gabmus.whatip
+          - io.missioncenter.MissionCenter
 
   - section:
       title: "Office & Productivity"
