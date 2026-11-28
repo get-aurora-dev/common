@@ -154,6 +154,7 @@ rows:
       overflow-count: 4
       appids:
         list:
+          - org.kde.kate
           - org.kde.kwi
           - io.podman_desktop.PodmanDesktop
           - me.iepure.devtoolbox

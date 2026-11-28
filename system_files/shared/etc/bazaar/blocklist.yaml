@@ -30,7 +30,6 @@ blocklists:
     - org.kde.ark
     - org.kde.dolphin
     - org.kde.filelight
-    - org.kde.kate
     - org.kde.kfind
     - org.kde.konsole
     - org.kde.kwalletmanager
